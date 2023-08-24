@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import {
     HiOutlineCalendarDays,
     HiOutlineCog6Tooth,
@@ -7,11 +7,30 @@ import {
     HiOutlineHomeModern,
     HiOutlineUsers,
 } from "react-icons/hi2";
+import { useDarkMode } from "../context/DarkModeContext";
 
 const NavList = styled.ul`
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
+
+    ${(props) =>
+        !props.$isMenuOpen &&
+        css`
+            & li span {
+                display: none;
+            }
+
+            & li a {
+                padding: 10px !important;
+                /* border: 1px solid red; */
+                display: block;
+                width: 100%;
+                text-align: center;
+                display: flex;
+                justify-content: center;
+            }
+        `}
 `;
 
 const StyledNavLink = styled(NavLink)`
@@ -55,9 +74,11 @@ const StyledNavLink = styled(NavLink)`
 `;
 
 function MainNav() {
+    const { isMenuOpen } = useDarkMode();
+
     return (
         <nav>
-            <NavList>
+            <NavList $isMenuOpen={isMenuOpen}>
                 <li>
                     <StyledNavLink to="/dashboard">
                         <HiOutlineHome /> <span>Home</span>{" "}

@@ -1,15 +1,14 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useEffect } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useLocalStorageState } from "../hooks/useLocalStorageState";
 
 const DarkModeContext = createContext();
 
 function DarkModeProvider({ children }) {
-    
-    
+    const [isMenuOpen, setIsMenuOpen] = useState(true);
 
     const [isDarkMode, setIsDarkMode] = useLocalStorageState(
-        window.matchMedia('(prefers-color-scheme: dark').matches,
+        window.matchMedia("(prefers-color-scheme: dark").matches,
         "isDarkMode"
     );
 
@@ -28,7 +27,9 @@ function DarkModeProvider({ children }) {
     }
 
     return (
-        <DarkModeContext.Provider value={{ isDarkMode, toggleDarkMode }}>
+        <DarkModeContext.Provider
+            value={{ isDarkMode, toggleDarkMode, isMenuOpen, setIsMenuOpen }}
+        >
             {children}
         </DarkModeContext.Provider>
     );
