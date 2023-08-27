@@ -3,7 +3,7 @@ import Logo from "./Logo";
 import MainNav from "./MainNav";
 // import Uploader from "../data/Uploader";
 import ButtonIcon from "./ButtonIcon";
-import { HiArrowLeft, HiArrowRight, HiXCircle } from "react-icons/hi2";
+import { HiArrowLeft, HiArrowRight } from "react-icons/hi2";
 import { useDarkMode } from "../context/DarkModeContext";
 
 const StyledSidebar = styled.aside`
@@ -28,7 +28,7 @@ const StyledSidebar = styled.aside`
 `;
 
 export default function Sidebar() {
-    const { setIsMenuOpen, isMenuOpen } = useDarkMode();
+    const { isMenuOpen } = useDarkMode();
 
     return (
         <StyledSidebar $isMenuOpen={isMenuOpen}>

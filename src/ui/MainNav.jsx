@@ -33,7 +33,7 @@ const NavList = styled.ul`
         `}
 `;
 
-const StyledNavLink = styled(NavLink)`
+export const StyledNavLink = styled(NavLink)`
     &:link,
     &:visited {
         display: flex;

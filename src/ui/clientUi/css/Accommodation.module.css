@@ -1,0 +1,65 @@
+.acc :global(.img-container) {
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    height: 290px;
+}
+
+.acc :global(.img-container img) {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    vertical-align: middle;
+}
+
+.acc :global(.location-rating) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.acc :global(.rating) {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.acc :global(.rating span) {
+    position: relative;
+    top: 1px;
+}
+
+.acc :global(.location) {
+    font-weight: 600;
+    font-size: 1.7rem;
+}
+
+.acc :global(.price-details span) {
+    font-weight: 600;
+}
+
+.acc :global(.location-info) {
+    font-weight: 600;
+    color: var(--color-grey-500);
+}
+
+.acc :global(.suggestion-interval) {
+    color: var(--color-grey-500);
+
+    display: flex;
+    gap: 5px;
+}
+
+.acc :global(.details) {
+    /* background-color: red; */
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    padding: 10px;
+}
+
+.acc :global(.price-max) {
+    display: flex;
+    justify-content: space-between;
+}

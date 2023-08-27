@@ -34,6 +34,7 @@ const Container = styled.div`
     flex-direction: column;
     gap: 3.2rem;
     min-width: 950px;
+    flex: 1;
 `;
 
 export default function AppLayout() {

@@ -23,6 +23,7 @@ import Menus from "../../ui/Menus";
 // `;
 
 const Img = styled.img`
+    cursor: pointer;
     display: block;
     width: 6.4rem;
     aspect-ratio: 3 / 2;
