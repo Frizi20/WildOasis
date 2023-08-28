@@ -5,7 +5,18 @@ import { Outlet } from "react-router-dom";
 import Footer from "./Footer";
 
 const StyledClientLayout = styled.div`
-    padding: 0 100px;
+    padding: 0 80px;
+    display: flex;
+    justify-content: center;
+
+    @media screen and (max-width: 1500px) {
+        padding: 0 40px;
+    }
+
+
+    @media screen and (max-width: 750px) {
+        padding: 0 25px;
+    }
 `;
 
 const PageContainer = styled.div`
@@ -14,6 +25,8 @@ const PageContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 20px;
+    max-width: 1400px;
+    width: 100%;
 `;
 
 const FixedHeader = styled.div`

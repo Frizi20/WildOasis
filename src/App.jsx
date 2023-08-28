@@ -8,6 +8,7 @@ import Settings from "./pages/Settings";
 import Account from "./pages/Account";
 import Login from "./pages/Login";
 import AppLayout from "./ui/AppLayout";
+import Accommodation from "./pages/clientPages/Accommodation";
 import GlobalStyles from "./styles/GlobalStyles";
 
 import { Toaster } from "react-hot-toast";
@@ -65,6 +66,10 @@ export default function App() {
                         </Route>
                         <Route element={<ClientLayout />}>
                             <Route index path="/client" element={<Client />} />
+                            <Route
+                                path="/client/booking/:id"
+                                element={<Accommodation />}
+                            />
                         </Route>
 
                         <Route path="/login" element={<Login />} />

@@ -1,17 +1,30 @@
 import { styled } from "styled-components";
 import styles from "./css/Accommodation.module.css";
 import { HiStar, HiUserGroup } from "react-icons/hi2";
+import { useNavigate } from "react-router-dom";
 
 const StyledAccommoidationItem = styled.div`
     background-color: ;
-    border: 1px solid gainsboro;
+    /* border: 1px solid gainsboro; */
+    border-radius: 10px;
+    cursor: pointer;
+
+    &:hover {
+        box-shadow: 0px 0px 16px 1px gainsboro;
+    }
 `;
 
 export default function AccommoidationItem({ accommodation }) {
     const { regularPrice, image } = accommodation;
+    const navigate = useNavigate();
 
     return (
-        <StyledAccommoidationItem className={styles.acc}>
+        <StyledAccommoidationItem
+            className={styles.acc}
+            onClick={() => {
+                navigate(`booking/${accommodation.id}`);
+            }}
+        >
             <div className="img-container">
                 <img src={image} alt="" />
             </div>

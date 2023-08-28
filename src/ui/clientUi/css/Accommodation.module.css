@@ -2,7 +2,13 @@
     border-radius: 10px;
     overflow: hidden;
     position: relative;
-    height: 290px;
+    /* height: 290px; */
+    aspect-ratio: 1/1;
+}
+
+.acc :global(.img-container):hover img {
+    transition: 0.1s all ease-in;
+    scale: 1.1;
 }
 
 .acc :global(.img-container img) {
@@ -32,20 +38,28 @@
 
 .acc :global(.location) {
     font-weight: 600;
-    font-size: 1.7rem;
+    font-size: 1.6rem;
+}
+
+.acc :global(.price-details){
+    margin-top: 5px;
 }
 
 .acc :global(.price-details span) {
     font-weight: 600;
+    font-size: 1.6rem;
+    
 }
 
 .acc :global(.location-info) {
     font-weight: 600;
     color: var(--color-grey-500);
+    font-size: 1.2rem;
 }
 
 .acc :global(.suggestion-interval) {
     color: var(--color-grey-500);
+    font-size: 1.4rem;
 
     display: flex;
     gap: 5px;
@@ -55,7 +69,7 @@
     /* background-color: red; */
     display: flex;
     flex-direction: column;
-    gap: 1px;
+    gap: 2px;
     padding: 10px;
 }
 
@@ -63,3 +77,4 @@
     display: flex;
     justify-content: space-between;
 }
+

@@ -1,11 +1,11 @@
-import { styled } from "styled-components";
+import { css, styled } from "styled-components";
 import Button from "../Button";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 
 const StyledSearch = styled.div`
     display: flex;
     background-color: #ffffff;
-    padding: 10px;
+    padding: 2px;
     border-radius: 50px;
     border: 1px solid gainsboro;
     position: relative;
@@ -17,6 +17,7 @@ const Right = styled.div`
     border-top-right-radius: 50px;
     border-bottom-right-radius: 50px;
     background-color: #fff;
+    padding-left: 10px;
 `;
 
 const Left = styled.div`
@@ -26,9 +27,62 @@ const Left = styled.div`
 `;
 
 const Input = styled.input`
-    padding: 5px;
+    padding: 5px 15px;
     height: 100%;
     border: none;
+    
+    outline: 1px gray;
+
+    position: relative;
+
+    ${(props) =>
+        props.border === "center" &&
+        css`
+            &::before {
+                content: "";
+                height: 90%;
+                background-color: #b1b1b1;
+                width: 1px;
+                position: absolute;
+                left: 0;
+            }
+            &::after {
+                content: "";
+                height: 90%;
+                background-color: #b1b1b1;
+                width: 1px;
+                position: absolute;
+                right: 0;
+            }
+        `}
+
+    ${(props) =>
+        props.radius === "left" &&
+        css`
+            border-top-left-radius: 50px;
+            border-bottom-left-radius: 50px;
+        `}
+
+    ${(props) =>
+        props.radius === "right" &&
+        css`
+            border-top-right-radius: 50px;
+            border-bottom-right-radius: 50px;
+        `}
+    
+    @media screen and (max-width: 700px){
+        ${(props)=> props.$hide === true && css`
+            display: none;
+        `}
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &::placeholder {
+        padding-left: 10px;
+    }
 `;
 
 const StyledButton = styled.button`
@@ -46,10 +100,29 @@ export default function Search() {
     return (
         <StyledSearch>
             <Left>
-                <Input type="text" name="" id="" placeholder="destination" />
+                <Input
+                    radius="left"
+                    type="text"
+                    name=""
+                    id=""
+                    placeholder="destination"
+                />
             </Left>
-            <Input placeholder="Start date" type="date" name="" id="" />
-            <Input placeholder="End date" type="date" name="" id="" />
+            <Input
+                $hide={true}
+                border="center"
+                placeholder="Start date"
+                type="date"
+                name=""
+                id=""
+            />
+            {/* <Input
+                radius="right"
+                placeholder="End date"
+                type="date"
+                name=""
+                id=""
+            /> */}
 
             <Right>
                 <StyledButton>

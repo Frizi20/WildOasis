@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { useDarkMode } from "../context/DarkModeContext";
+import { useNavigate } from "react-router-dom";
 
 const StyledLogo = styled.div`
     text-align: center;
@@ -9,6 +10,7 @@ const StyledLogo = styled.div`
         props.$height &&
         css`
             height: ${props.$height}px;
+            width: ${props.$height}px;
         `}
 `;
 
@@ -17,12 +19,18 @@ const Img = styled.img`
     object-fit: contain;
 `;
 
-function Logo({ height }) {
+function Logo({ height, noTitle }) {
+
+    const navigate = useNavigate()
+
     const { isDarkMode } = useDarkMode();
     const src = isDarkMode ? "/logo-dark.png" : "/logo-light.png";
+    console.log({
+        noTitle
+    });
     return (
-        <StyledLogo $height={height}>
-            <Img src={src} alt="Logo" />
+        <StyledLogo $height={height} onClick={()=>{navigate('/client')}}>
+            <Img src={noTitle ? "/logo-light-no-title.png" : src} alt="Logo" />
         </StyledLogo>
     );
 }
