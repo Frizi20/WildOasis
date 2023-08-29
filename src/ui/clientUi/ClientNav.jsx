@@ -69,7 +69,7 @@ const FilterContainer = styled.div`
     }
 `;
 
-const Filter = styled.div`
+export const StyledBtn = styled.div`
     display: flex;
     align-items: center;
     background-color: var(--color-indigo-700);
@@ -87,7 +87,7 @@ const Filter = styled.div`
     }
 `;
 
-const Favorites = styled(Filter)`
+const Favorites = styled(StyledBtn)`
     /* background-color: red; */
     & svg {
         color: #ff5d5d;
@@ -145,10 +145,10 @@ export default function ClientNav() {
                     <HiHeart />
                     <span>Favorites</span>
                 </Favorites>
-                <Filter>
+                <StyledBtn>
                     <HiAdjustmentsHorizontal />
                     <span>Filters</span>
-                </Filter>
+                </StyledBtn>
             </FilterContainer>
         </Nav>
     );

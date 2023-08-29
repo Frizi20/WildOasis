@@ -1,9 +1,6 @@
 
-export default function Accommodation() {
-    return (
-        <div>
-            Accommodation details
-        </div>
-    )
-}
+import AccommodationDetails from "../../features/client/AccommodationDetails"
 
+export default function Accommodation() {
+    return <AccommodationDetails />
+}

@@ -84,3 +84,5 @@ export async function updateCurrentUser({ password, fullName, avatar }) {
 
     return updatedUser;
 }
+
+

@@ -71,3 +71,18 @@ export async function createEditCabin(newCabin, id) {
 
     return data;
 }
+
+export async function getCabin(id) {
+    const { data: cabins, error } = await supabase
+        .from("cabins")
+        .select("*")
+        .eq("id", id)
+        .single();
+
+    if (error) {
+        console.error(error);
+        throw new Error("Cabin not found");
+    }
+
+    return cabins;
+}
