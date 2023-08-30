@@ -3,7 +3,6 @@ import AccommoidationItem from "./AccommoidationItem";
 import useCabins from "../../features/cabins/useCabins";
 import Spinner from "../Spinner";
 import { useEffect } from "react";
-import ScrollToTop from "react-scroll-to-top";
 
 const StyledAccomodationsContainer = styled.div`
     flex: 0 0 200px;
@@ -15,7 +14,7 @@ const StyledAccomodationsContainer = styled.div`
 
     /* background-color: red; */
 
-    min-height:700px;
+    min-height: 700px;
 
     @media screen and (max-width: 1600px) {
         grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -48,9 +47,6 @@ const FakeCabbinsContainer = styled.div`
 export default function Accommodations() {
     const { cabins, isLoading } = useCabins();
 
-    // useEffect(() => {
-    //     window.scrollTo(0,0)
-    // }, [isLoading]);
 
     if (isLoading)
         return (
@@ -75,7 +71,6 @@ export default function Accommodations() {
                     );
                 })}
             </StyledAccomodationsContainer>
-            <ScrollToTop smooth />
         </>
     );
 }

@@ -125,7 +125,7 @@ const ReserveModalContainer = styled.div`
 
     & .reserve {
         position: sticky;
-        top: 200px;
+        top: 70px;
         border-radius: 20px;
         height: 400px;
         border: 1px solid gainsboro;
@@ -135,13 +135,13 @@ const ReserveModalContainer = styled.div`
 const Row = styled.div`
     display: flex;
     flex-direction: column;
-    padding: 15px 0 20px ;
+    padding: 15px 0 20px;
     border-bottom: 1px solid gainsboro;
 
-    & p{
+    & p {
         font-size: 1.3rem;
     }
-`
+`;
 
 const DescriptionContainer = styled.div``;
 
@@ -225,16 +225,18 @@ export default function AccommodationDetails() {
 
                     <Row>
                         <h3>Description</h3>
-                        <p>  {accommodation.description} </p>
+                        <p> {accommodation.description} </p>
                     </Row>
 
                     <Row>
                         <h3>Facilities</h3>
-                        <FaclitiesList facilities={[0,1,2,3,4,5,6,7,8,9]} />
+                        <FaclitiesList
+                            facilities={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]}
+                        />
                     </Row>
                     <Row>
                         <h3>Reviews</h3>
-                        <Reviews/>
+                        <Reviews />
                     </Row>
                 </Details>
 

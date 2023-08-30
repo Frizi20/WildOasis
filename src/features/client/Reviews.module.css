@@ -1,0 +1,21 @@
+:global(.wrapper) {
+    border: 3px solid blue;
+}
+
+:global(.container) {
+    background-color: pink;
+}
+
+:global(.barCompleted) {
+    background-color: lightblue;
+    width: 80%;
+}
+
+:global(.label) {
+    font-size: 20px;
+    color: green;
+}
+
+/* :global(body){
+    display: none;
+} */
