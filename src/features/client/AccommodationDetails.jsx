@@ -55,7 +55,7 @@ const GalleryContainer = styled.div`
             display: none;
         }
         & div:first-child {
-            grid-area: 1/-1/1/-1;
+            grid-area: 1/1/4/5;
         }
     }
 `;

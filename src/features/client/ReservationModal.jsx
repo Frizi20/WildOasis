@@ -76,6 +76,10 @@ const ReserveModalContainer = styled.div`
     & .datePicker input:focus {
         outline: none;
     }
+
+    @media screen and (max-width: 982px){
+        display: none;
+    }
 `;
 
 const Center = styled.div`
