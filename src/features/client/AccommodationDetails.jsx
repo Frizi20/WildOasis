@@ -11,6 +11,8 @@ import ReviewsList from "./ReviewsList";
 import RoomsList from "./RoomsList";
 import ReservationModal from "./ReservationModal";
 import NoReviews from "../../ui/clientUi/NoReviews";
+import AddReview from "./AddReview";
+import { useUser } from "../authentication/useUser";
 
 const PageWrapper = styled.div`
     width: 1100px;
@@ -186,6 +188,8 @@ const HorizontalWrapper = styled.div`
 export default function AccommodationDetails() {
     const { isLoading, data: accommodation } = useCabin();
     const [showMore, setShowMore] = useState(false);
+    const {user} = useUser()
+
 
     if (isLoading) return <Spinner />;
 
@@ -306,6 +310,7 @@ export default function AccommodationDetails() {
 
                     <ReservationModal accommodation={accommodation} />
                 </HorizontalWrapper>
+
                 {reviews.length > 0 ? (
                     <>
                         <Reviews reviews={reviews} />
@@ -314,6 +319,8 @@ export default function AccommodationDetails() {
                 ) : (
                     <NoReviews />
                 )}
+
+                <AddReview />
             </DetailsWrapper>
         </PageWrapper>
     );

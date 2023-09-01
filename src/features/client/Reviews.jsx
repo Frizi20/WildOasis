@@ -1,11 +1,6 @@
-import { HiStar } from "react-icons/hi2";
-import { FaStarHalf } from "react-icons/fa";
-import { ImStarFull, ImStarHalf } from "react-icons/im";
 import { styled } from "styled-components";
-import styles from "./Reviews.module.css";
 import ProgressBar from "@ramonak/react-progress-bar";
 import { StarRating } from "../../ui/StarRating";
-
 
 const ReviewsContainer = styled.div`
     /* height: 200px; */
@@ -26,7 +21,7 @@ const GradeContainer = styled.div`
     align-items: center;
     gap: 5px;
 
-    & .reviews-count{
+    & .reviews-count {
         font-size: 1.4rem;
         font-weight: 500;
         color: #838383;
@@ -70,85 +65,83 @@ const ProgressBarrRow = styled.div`
     }
 `;
 
-export default function Reviews({reviews}) {
+export default function Reviews({ reviews }) {
+    const nrReviews = reviews.length;
+    const grade =
+        Math.round(
+            reviews.reduce((acc, curr) => acc + curr.rating / nrReviews, 0) * 10
+        ) / 10;
+    const gradeDisplay = grade % 1 === 0 ? String(grade) + ".0" : grade;
 
-    const nrReviews = reviews.length
-    const grade = Math.round(reviews.reduce((acc,curr)=> acc + (curr.rating / nrReviews) ,0) * 10) / 10;
-    const gradeDisplay = grade % 1 === 0 ? String(grade) + '.0' : grade
-
+    const separatedReviews = Object.entries(
+        separateReviews(reviews, nrReviews)
+    ).reverse();
 
     return (
         <ReviewsContainer>
             <GradeContainer>
                 <div className="grade"> {gradeDisplay} </div>
                 <div className="stars">
-                    <StarRating size={23} color={'#004753'} rating={grade} />
+                    <StarRating size={23} color={"#004753"} rating={grade} />
                 </div>
                 <div className="reviews-count">({nrReviews})</div>
             </GradeContainer>
             <ReviewsProgressBars>
-                <ProgressBarrRow className={styled.progress}>
-                    <div className="label">5</div>
-                    <div className="progress-bar-container">
-                        <ProgressBar
-                            baseBgColor="#f3f3f3"
-                            bgColor="#057a8f"
-                            isLabelVisible={false}
-                            height="8px"
-                            completed={90}
-                        />
-                    </div>
-                </ProgressBarrRow>
-                <ProgressBarrRow>
-                    <div className="label">4</div>
-                    <div className="progress-bar-container">
-                        <ProgressBar
-                            baseBgColor="#f3f3f3"
-                            bgColor="#057a8f"
-                            isLabelVisible={false}
-                            height="8px"
-                            completed={15}
-                        />
-                    </div>
-                </ProgressBarrRow>
-                <ProgressBarrRow>
-                    <div className="label">3</div>
-                    <div className="progress-bar-container">
-                        <ProgressBar
-                            baseBgColor="#f3f3f3"
-                            bgColor="#057a8f"
-                            isLabelVisible={false}
-                            height="8px"
-                            completed={5}
-                        />
-                    </div>
-                </ProgressBarrRow>
-                <ProgressBarrRow>
-                    <div className="label">2</div>
-                    <div className="progress-bar-container">
-                        <ProgressBar
-                            baseBgColor="#f3f3f3"
-                            bgColor="#057a8f"
-                            isLabelVisible={false}
-                            height="8px"
-                            completed={20}
-                        />
-                    </div>
-                </ProgressBarrRow>
-                <ProgressBarrRow>
-                    <div className="label">1</div>
-                    <div className="progress-bar-container">
-                        <ProgressBar
-                            baseBgColor="#f3f3f3"
-                            bgColor="#057a8f"
-                            isLabelVisible={false}
-                            height="8px"
-                            completed={40}
-                        />
-                    </div>
-                </ProgressBarrRow>
+                {separatedReviews.map(([label, review]) => {
+                    return (
+                        <ProgressBarrRow
+                            key={label}
+                            className={styled.progress}
+                        >
+                            <div className="label"> {label} </div>
+                            <div className="progress-bar-container">
+                                <ProgressBar
+                                    baseBgColor="#f3f3f3"
+                                    bgColor="#057a8f"
+                                    isLabelVisible={false}
+                                    height="8px"
+                                    completed={review.completed}
+                                />
+                            </div>
+                        </ProgressBarrRow>
+                    );
+                })}
             </ReviewsProgressBars>
-            
         </ReviewsContainer>
+    );
+}
+
+function separateReviews(reviews, nrReviews) {
+    return reviews.reduce(
+        (acc, curr) => {
+            const count = acc[curr.rating].count + 1;
+            const newRow = {
+                count: count,
+                completed: (count / nrReviews) * 100,
+            };
+            return { ...acc, [curr.rating]: newRow };
+        },
+        {
+            5: {
+                count: 0,
+                completed: 0,
+            },
+            4: {
+                count: 0,
+                completed: 0,
+            },
+            3: {
+                count: 0,
+                completed: 0,
+            },
+            2: {
+                count: 0,
+                completed: 0,
+            },
+            1: {
+                count: 0,
+                completed: 0,
+            },
+        }
     );
 }
