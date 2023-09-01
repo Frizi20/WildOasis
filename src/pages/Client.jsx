@@ -1,6 +1,5 @@
-import Accommodations from "../ui/clientUi/Accommodations";
+import Accommodations from "../features/client/Accommodations";
 
-
-export default function Client(){
-    return <Accommodations/>
+export default function Client() {
+    return <Accommodations />;
 }

@@ -15,7 +15,7 @@ const StyledAccommoidationItem = styled.div`
 `;
 
 export default function AccommoidationItem({ accommodation }) {
-    const { regularPrice, image } = accommodation;
+    const { regularPrice, image, name } = accommodation;
     const navigate = useNavigate();
 
     return (
@@ -30,7 +30,7 @@ export default function AccommoidationItem({ accommodation }) {
             </div>
             <div className="details">
                 <div className="location-rating">
-                    <div className="location">Richiș, Romania</div>
+                    <div className="location"> {name} </div>
                     <div className="rating">
                         <HiStar /> <span> 5 </span>
                     </div>

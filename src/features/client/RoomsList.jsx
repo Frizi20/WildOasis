@@ -1,5 +1,7 @@
+/* eslint-disable no-unused-vars */
 import { HiAdjustments, HiUserRemove } from "react-icons/hi";
 import { HiFingerPrint, HiFlag, HiTv, HiWifi } from "react-icons/hi2";
+import { BiBed } from "react-icons/bi";
 import { styled } from "styled-components";
 
 const icons = [
@@ -61,40 +63,64 @@ const icons = [
     },
 ];
 
-const StyledFaclitiesList = styled.div`
-    /* border: 1px solid gainsboro; */
-    padding: 10px 0;
+const StyledRoomsList = styled.div`
     display: grid;
-    gap: 5px;
-
     grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
 `;
 
-const StyledItem = styled.div`
-    display: flex;
-    padding: 5px 10px;
-    border-radius: 5px;
+const StyledRoomItem = styled.div`
+    padding: 20px;
+    display: grid;
+    flex-direction: column;
     border: 1px solid gainsboro;
-    align-items: center;
-    gap: 5px;
+    border-radius: 10px;
+
+    & .icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    & svg {
+        height: 30px;
+        width: 30px;
+    }
+
+    & .room-type{
+        font-size: 1.9rem;
+        text-align: center;
+    }
+
+    & .room-details{
+        color: #8b8b8b;
+        font-size: 1.2rem;
+        text-align: center;
+    }
 `;
 
-export default function FaclitiesList({ facilities }) {
+export default function RoomsList() {
     return (
-        <StyledFaclitiesList>
-            {facilities.map((facility) => {
-              
-                return <FacilityItem key={facility} facility={facility} />;
-            })}
-        </StyledFaclitiesList>
+        <StyledRoomsList>
+            <RoomItem />
+            <RoomItem />
+            <RoomItem />
+        </StyledRoomsList>
     );
 }
 
-function FacilityItem({facility}) {
+function RoomItem({ room }) {
     return (
-        <StyledItem>
-            {icons[facility]?.item}
-            <span> {icons[facility]?.description} </span>
-        </StyledItem>
+        <StyledRoomItem>
+            <div className="icon">
+                <BiBed />
+            </div>
+            <div className="room-type">
+                Bedroom
+            </div>
+            <div className="room-details">
+                1 double bed, 1 single bed
+            </div>
+        </StyledRoomItem>
     );
 }

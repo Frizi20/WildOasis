@@ -20,16 +20,18 @@ const Img = styled.img`
 `;
 
 function Logo({ height, noTitle }) {
-
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const { isDarkMode } = useDarkMode();
     const src = isDarkMode ? "/logo-dark.png" : "/logo-light.png";
-    console.log({
-        noTitle
-    });
+
     return (
-        <StyledLogo $height={height} onClick={()=>{navigate('/client')}}>
+        <StyledLogo
+            $height={height}
+            onClick={() => {
+                navigate("/client");
+            }}
+        >
             <Img src={noTitle ? "/logo-light-no-title.png" : src} alt="Logo" />
         </StyledLogo>
     );

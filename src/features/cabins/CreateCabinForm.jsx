@@ -9,11 +9,16 @@ import Button from "../../ui/Button";
 import FileInput from "../../ui/FileInput";
 import Textarea from "../../ui/Textarea";
 import FormRow from "../../ui/FormRow";
+import { useUser } from "../authentication/useUser";
 
 function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
     const { isCreating, createCabin } = useCreateCabin();
     const { isEditing, editCabin } = useEditCabin();
     const isWorking = isEditing || isCreating;
+
+    const { user } = useUser();
+    const userId = user.id
+
 
     const { id: editId, ...editValues } = cabinToEdit;
     const isEditSession = Boolean(editId);
@@ -28,7 +33,6 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
             typeof data.image === "string" ? data.image : data.image[0];
 
         if (isEditSession) {
-            console.log("ediita");
             editCabin(
                 { newCabinData: { ...data, image }, id: editId },
                 {
@@ -40,9 +44,9 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
             );
         } else {
             createCabin(
-                { ...data, image: image },
+                { ...data, image: image, userId },
                 {
-                    onSuccess: () => {   
+                    onSuccess: () => {
                         onCloseModal?.();
                         reset();
                     },
@@ -54,7 +58,10 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
     // function onError(errors) {}
 
     return (
-        <Form onSubmit={handleSubmit(onSubmit)} type={onCloseModal ? 'modal' : 'regular '}>
+        <Form
+            onSubmit={handleSubmit(onSubmit)}
+            type={onCloseModal ? "modal" : "regular "}
+        >
             <FormRow label={"Cabin Name"} error={errors?.name?.message}>
                 <Input
                     disabled={isWorking}

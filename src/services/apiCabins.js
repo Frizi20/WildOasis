@@ -75,7 +75,7 @@ export async function createEditCabin(newCabin, id) {
 export async function getCabin(id) {
     const { data: cabins, error } = await supabase
         .from("cabins")
-        .select("*")
+        .select("*,profile(*), reviews(*,profile(display_name,avatar))")
         .eq("id", id)
         .single();
 

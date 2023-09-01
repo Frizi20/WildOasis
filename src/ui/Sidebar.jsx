@@ -1,7 +1,7 @@
 import { css, styled } from "styled-components";
 import Logo from "./Logo";
 import MainNav from "./MainNav";
-// import Uploader from "../data/Uploader";
+import Uploader from "../data/Uploader";
 import ButtonIcon from "./ButtonIcon";
 import { HiArrowLeft, HiArrowRight } from "react-icons/hi2";
 import { useDarkMode } from "../context/DarkModeContext";
@@ -36,7 +36,7 @@ export default function Sidebar() {
             <Logo />
             <MainNav />
 
-            {/* <Uploader /> */}
+            <Uploader />
         </StyledSidebar>
     );
 }

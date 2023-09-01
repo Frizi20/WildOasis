@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
-import AccommoidationItem from "./AccommoidationItem";
-import useCabins from "../../features/cabins/useCabins";
-import Spinner from "../Spinner";
+import AccommoidationItem from "../../ui/clientUi/AccommoidationItem";
+import useCabins from "../cabins/useCabins";
+import Spinner from "../../ui/Spinner";
 import { useEffect } from "react";
 
 const StyledAccomodationsContainer = styled.div`
@@ -47,7 +47,6 @@ const FakeCabbinsContainer = styled.div`
 export default function Accommodations() {
     const { cabins, isLoading } = useCabins();
 
-
     if (isLoading)
         return (
             <>
@@ -57,7 +56,8 @@ export default function Accommodations() {
             </>
         );
 
-    const double = [...cabins, ...cabins, ...cabins];
+
+    const double = [...cabins];
 
     return (
         <>

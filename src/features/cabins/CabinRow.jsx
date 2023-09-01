@@ -59,6 +59,7 @@ export default function CabinRow({ cabin }) {
         discount,
         description,
         image,
+        userId
     } = cabin;
     const { isDeleting, deleteCabin } = useDeleteCabin();
     const { isCreating, createCabin } = useCreateCabin();
@@ -72,6 +73,7 @@ export default function CabinRow({ cabin }) {
             discount,
             image,
             description,
+            userId
         });
     }
 

@@ -9,15 +9,15 @@ export default styled.h1`
     ${(props) =>
         props.as === "h1" &&
         css`
-            font-size: 4rem !important;
+            font-size: 3rem !important;
             font-weight: 700;
             color: #0c3a56;
         `}
 
     ${(props) =>
-        props.as === "h1" &&
+        props.as === "h2" &&
         css`
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: 600;
         `}
 
@@ -31,7 +31,7 @@ export default styled.h1`
     ${(props) =>
         props.as === "h4" &&
         css`
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 600;
             text-align: center;
         `}
@@ -43,8 +43,5 @@ export default styled.h1`
             font-weight: 500;
         `}
 
-    
 
-    font-size: ${10 > 5 ? "30px" : "5px"};
-    font-weight: 600;
 `;

@@ -8,6 +8,7 @@ const StyledClientLayout = styled.div`
     padding: 0 80px;
     display: flex;
     justify-content: center;
+    padding-bottom: 50px;
 
     @media screen and (max-width: 1500px) {
         padding: 0 40px;
@@ -49,7 +50,7 @@ export default function ClientLayout() {
                 <Container>
                     <Outlet />
                 </Container>
-                <Footer />
+                {/* <Footer /> */}
             </PageContainer>
         </StyledClientLayout>
     );
