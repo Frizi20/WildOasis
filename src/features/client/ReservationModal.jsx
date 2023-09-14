@@ -179,7 +179,7 @@ export default function ReservationModal({ accommodation, settings }) {
             <div className="reservation-modal">
                 <div className="header">
                     <div>
-                        <span>{formatCurrency(regularPrice)}$</span> night
+                        <span>{formatCurrency(regularPrice)}</span> night
                     </div>
                 </div>
                 <div className="form">
