@@ -10,12 +10,10 @@ export default function useCabin() {
             return getCabin(id);
         },
         queryKey: ["accommodation", id],
-        onSuccess: () => {
-            console.log("data loaded");
-        },
-        onError:(err)=>{
+        onSuccess: () => {},
+        onError: (err) => {
             console.error(err);
-        }
+        },
     });
 
     return { isLoading, data };

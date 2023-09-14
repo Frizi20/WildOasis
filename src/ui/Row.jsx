@@ -16,8 +16,12 @@ const Row = styled.div`
             display: flex;
             flex-direction: column;
         `}
-
-
+        
+    ${(props) =>
+        props.$marginTop &&
+        css`
+            margin-top: ${props.$marginTop}px;
+        `}
 `;
 
 Row.defaultProps = {

@@ -4,7 +4,7 @@ import useCabin from "../cabins/useCabin";
 import { HiHeart, HiStar } from "react-icons/hi2";
 import styles from "./AccommodationDetails.module.css";
 import { StyledBtn } from "../../ui/clientUi/ClientNav";
-import FaclitiesList from "./FaclitiesList";
+import Facilities from "./Facilities";
 import Reviews from "./Reviews";
 import { useState } from "react";
 import ReviewsList from "./ReviewsList";
@@ -12,54 +12,43 @@ import RoomsList from "./RoomsList";
 import ReservationModal from "./ReservationModal";
 import NoReviews from "../../ui/clientUi/NoReviews";
 import AddReview from "./AddReview";
-import { useUser } from "../authentication/useUser";
+import { useFavorites } from "../../context/FavoritesContext";
+import GaleryDesktop from "../../ui/GaleryDesktop";
+import Slider from "../../ui/Slider";
+import { useMediaQuery } from "react-responsive";
+import BackButton from "../../ui/BackButton";
+import { useSettings } from "../settings/useSettings";
+import Button from "../../ui/Button";
+import Modal from "../../ui/Modal";
 
 const PageWrapper = styled.div`
     width: 1100px;
     max-width: 100%;
     margin: 0 auto;
+    padding-bottom: 100px;
 `;
 
 const GeneralDetailsContainer = styled.div``;
 
 const GeneralDetails = styled.div`
-    border: 1px solid gainsboro;
+    position: relative;
 
     & .title {
-        padding: 5px 0;
-    }
-`;
-
-const GalleryContainer = styled.div`
-    /* height: 500px; */
-    /* border: 1px solid gainsboro; */
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 10px;
-    margin-top: 10px;
-
-    & div {
-        border: 1px solid gainsboro;
+        padding: 5px 0 1px 0;
     }
 
-    & div:first-child {
-        grid-area: 1/1/3/3;
+    & .back-btn {
+        position: absolute;
+        left: -50px;
     }
 
-    & img {
-        /* width: 20px; */
-        object-fit: cover;
-        height: 100%;
-    }
-
-    @media screen and (max-width: 1090px) {
-        & div:not(:first-child) {
-            display: none;
-        }
-        & div:first-child {
-            grid-area: 1/1/4/5;
-        }
-    }
+    ${(props) =>
+        props.$isFavorite &&
+        css`
+            & .btns svg {
+                fill: #ff5d5d;
+            }
+        `}
 `;
 
 const DetailsWrapper = styled.div`
@@ -90,6 +79,7 @@ const Details = styled.div`
         display: flex;
         align-items: center;
         gap: 10px;
+        flex-wrap: wrap;
         /* gap: 20px; */
         /* padding: 10px 0; */
     }
@@ -162,6 +152,14 @@ const Row = styled.div`
         css`
             border: none;
         `}
+
+    ${(props) => {
+        props?.$margin &&
+            css`
+                margin-top: ${props.margin}px;
+                /* background-color: red; */
+            `;
+    }}
 `;
 
 const DescriptionContainer = styled.div``;
@@ -185,70 +183,82 @@ const HorizontalWrapper = styled.div`
     border-bottom: 1px solid gainsboro;
 `;
 
+const StyledButton = styled.div`
+    margin-top: 50px;
+    text-align: center;
+`;
+
 export default function AccommodationDetails() {
-    const { isLoading, data: accommodation } = useCabin();
+    const showSliderGalery = useMediaQuery({ query: "(max-width: 1090px)" });
     const [showMore, setShowMore] = useState(false);
-    const {user} = useUser()
 
+    const { isLoading, data: accommodation } = useCabin();
+    const { favoriteItems, toggleItem } = useFavorites();
+    const { isLoadingSettings, settings } = useSettings();
 
-    if (isLoading) return <Spinner />;
+    // const { user } = useUser();
 
-    const { description, reviews } = accommodation;
+    if (isLoading || isLoadingSettings) return <Spinner />;
+
+    const { description, reviews, title, location, cabins_facilities, images } =
+        accommodation;
 
     const display_name = accommodation?.profile?.display_name;
     const avatar = accommodation?.profile?.avatar || "/default-user.jpg";
+    const isFavorite = favoriteItems.includes(accommodation.id);
+
+    const nrReviews = reviews.length;
+    const grade =
+        Math.round(
+            reviews.reduce(
+                (acc, review) => acc + review.rating / nrReviews,
+                0
+            ) * 10
+        ) / 10;
 
     return (
         <PageWrapper>
             <GeneralDetailsContainer className={styles.acc}>
-                <GeneralDetails>
-                    <div className="title">A nice place to visit</div>
+                <GeneralDetails $isFavorite={isFavorite}>
+                    <div className="back-btn">
+                        <BackButton />
+                    </div>
+                    <div className="title"> {title} </div>
                     <div className="general-details">
                         <div className="info">
                             <div className="rating">
-                                <HiStar /> 4.65
+                                <HiStar /> {grade}
                             </div>
                             <div className="dot">
                                 <> &middot;</>
                             </div>
                             <div className="reviews">
-                                <strong>241</strong> reviews
+                                {reviews.length} reviews
                             </div>
                             <div className="dot">
                                 <> &middot;</>
                             </div>
-                            <div className="location">
-                                Brasov, pe undeva prin centru
-                            </div>
+                            <div className="location">{location}</div>
                         </div>
-                        <div className="bnts">
-                            <StyledBtn>
+                        <div className="btns">
+                            <StyledBtn
+                                onClick={() => {
+                                    toggleItem(accommodation.id);
+                                }}
+                            >
                                 <HiHeart /> Save
                             </StyledBtn>
                         </div>
                     </div>
                 </GeneralDetails>
-                <GalleryContainer>
-                    <div>
-                        <img
-                            className="first-img"
-                            src={accommodation.image}
-                            alt=""
-                        />
+
+                {showSliderGalery ? (
+                    <div className="container" style={{ position: "relative" }}>
+                        <Slider images={images} isHovered={true} />
                     </div>
-                    <div>
-                        <img src={accommodation.image} alt="" />
-                    </div>
-                    <div>
-                        <img src={accommodation.image} alt="" />
-                    </div>
-                    <div>
-                        <img src={accommodation.image} alt="" />
-                    </div>
-                    <div>
-                        <img src={accommodation.image} alt="" />
-                    </div>
-                </GalleryContainer>
+                ) : (
+                    <GaleryDesktop images={images} />
+                )}
             </GeneralDetailsContainer>
 
             <DetailsWrapper>
@@ -279,48 +289,58 @@ export default function AccommodationDetails() {
 
                             <>
                                 <p>
-                                    {showMore
+                                    {showMore || description.length < 400
                                         ? description
                                         : description.slice(0, 400) + " ..."}
-                                    <ShowMoreBtn
-                                        onClick={() => {
-                                            setShowMore((p) => !p);
-                                        }}
-                                    >
-                                        {showMore
-                                            ? "show less -"
-                                            : "show more +"}
-                                    </ShowMoreBtn>
+                                    {description.length > 400 && (
+                                        <ShowMoreBtn
+                                            onClick={() => {
+                                                setShowMore((p) => !p);
+                                            }}
+                                        >
+                                            {showMore
+                                                ? "show less -"
+                                                : "show more +"}
+                                        </ShowMoreBtn>
+                                    )}
                                 </p>
                             </>
                         </Row>
 
-                        <Row>
-                            <h3>Facilities</h3>
-                            <FaclitiesList
-                                facilities={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]}
-                            />
-                        </Row>
+                        <Facilities facilities={cabins_facilities} />
 
-                        <Row $border="none">
+                        <Row $border="none" $margin={20}>
                             <h3>Rooms</h3>
                             <RoomsList />
                         </Row>
                     </Details>
 
-                    <ReservationModal accommodation={accommodation} />
+                    <ReservationModal
+                        accommodation={accommodation}
+                        settings={settings}
+                    />
                 </HorizontalWrapper>
 
                 {reviews.length > 0 ? (
                     <>
                         <Reviews reviews={reviews} />
                         <ReviewsList reviews={reviews} />
+                        {/* <Reviews/> */}
                     </>
                 ) : (
                     <NoReviews />
                 )}
 
-                <AddReview />
+                <Modal>
+                    <Modal.Open opens="add-review">
+                        <StyledButton>
+                            <Button size="large">Add review</Button>
+                        </StyledButton>
+                    </Modal.Open>
+                    <Modal.Window name="add-review">
+                        <AddReview />
+                    </Modal.Window>
+                </Modal>
             </DetailsWrapper>
         </PageWrapper>
     );

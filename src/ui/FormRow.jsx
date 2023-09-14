@@ -2,15 +2,16 @@
 import { css, styled } from "styled-components";
 
 const StyledFormRow = styled.div`
-    grid-template-columns: 24rem 1fr 1.2fr;
+    grid-template-columns: 24rem 2fr 1fr;
 
-    ${(props) =>{
-        
-        return props.$grid &&
-        css`
-            grid-template-columns: ${props.$grid};
-        `}
-    }
+    ${(props) => {
+        return (
+            props.$grid &&
+            css`
+                grid-template-columns: ${props.$grid};
+            `
+        );
+    }}
 
     display: grid;
     align-items: center;

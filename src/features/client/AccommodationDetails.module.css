@@ -11,27 +11,45 @@
     gap: 30px;
 } */
 
-.acc :global(.title){
-
-    font-size: 2.5rem;
+.acc :global(.title) {
+    font-size: 2.2rem;
     color: #000;
     font-weight: 500;
 }
 
-.acc :global(.general-details){
+.acc :global(.general-details) {
     display: flex;
     justify-content: space-between;
     /* align-items: center; */
     padding: 5px 0;
 }
 
-.acc :global(.general-details .info){
+.acc :global(.general-details .info) {
     display: flex;
-    gap: 16px;
+    gap: 5px;
     align-items: center;
+    color: #000;
+    font-size: 1.4rem;
+
 }
 
-.acc :global(.dot){
-    scale: 3 ;
+.acc :global(.dot) {
 }
 
+.acc :global(.rating svg){
+    position: relative;
+    top: 1.5px;
+}
+.acc :global(.rating){
+    font-size: 1.5rem;
+}
+
+.acc :global(.reviews){
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.acc :global(.location){
+    text-decoration: underline;
+    cursor: pointer;
+}

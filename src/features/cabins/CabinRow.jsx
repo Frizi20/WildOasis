@@ -51,6 +51,7 @@ const Discount = styled.div`
 `;
 
 export default function CabinRow({ cabin }) {
+
     const {
         id: cabinId,
         name,
@@ -59,11 +60,17 @@ export default function CabinRow({ cabin }) {
         discount,
         description,
         image,
-        userId
+        userId,
+        title,
+        location,
+        cabins_facilities:facilities,
+        images
+        
     } = cabin;
     const { isDeleting, deleteCabin } = useDeleteCabin();
     const { isCreating, createCabin } = useCreateCabin();
     
+ 
 
     function handleDuplicate() {
         createCabin({
@@ -73,13 +80,18 @@ export default function CabinRow({ cabin }) {
             discount,
             image,
             description,
-            userId
+            userId,
+            title,
+            location,
+            facilities:facilities.map(facility=> facility.facilities.id)
         });
+
     }
+
 
     return (
         <Table.Row role="row">
-            <Img src={image || "ceva"} />
+            <Img src={images[0]?.image || "ceva"} />
             <Cabin> {name} </Cabin>
             <div> Fits up to {maxCapacity} guests</div>
             <Price> {formatCurrency(regularPrice)} </Price>

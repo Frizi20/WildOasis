@@ -8,6 +8,7 @@ export default function DarkModeToggle() {
     return (
         <ButtonIcon onClick={toggleDarkMode}>
             {isDarkMode ? <HiOutlineSun /> : <HiOutlineMoon />}
+            
         </ButtonIcon>
     );
 }

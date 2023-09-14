@@ -32,7 +32,7 @@ function Logo({ height, noTitle }) {
                 navigate("/client");
             }}
         >
-            <Img src={noTitle ? "/logo-light-no-title.png" : src} alt="Logo" />
+            <Img src={'/logo.png'} alt="Logo" />
         </StyledLogo>
     );
 }

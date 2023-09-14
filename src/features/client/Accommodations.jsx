@@ -1,11 +1,12 @@
 import { styled } from "styled-components";
-import AccommoidationItem from "../../ui/clientUi/AccommoidationItem";
+import AccommoidationItem from "./AccommoidationItem";
 import useCabins from "../cabins/useCabins";
 import Spinner from "../../ui/Spinner";
+import { css } from "styled-components";
 import { useEffect } from "react";
 
 const StyledAccomodationsContainer = styled.div`
-    flex: 0 0 200px;
+    /* flex: 0 0 200px; */
     overflow: hidden;
     padding: 10px 0;
     display: grid;
@@ -14,7 +15,7 @@ const StyledAccomodationsContainer = styled.div`
 
     /* background-color: red; */
 
-    min-height: 700px;
+    /* min-height: 700px; */
 
     @media screen and (max-width: 1600px) {
         grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -35,13 +36,17 @@ const StyledAccomodationsContainer = styled.div`
     @media screen and (max-width: 550px) {
         grid-template-columns: 1fr;
     }
-`;
 
-const FakeCabbinsContainer = styled.div`
-    /* min-height: 700px; */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    ${(props) => {
+        return (
+            props?.$spinner &&
+            css`
+                display: flex !important;
+                align-items: center;
+                justify-content: center;
+            `
+        );
+    }}
 `;
 
 export default function Accommodations() {
@@ -50,19 +55,16 @@ export default function Accommodations() {
     if (isLoading)
         return (
             <>
-                <StyledAccomodationsContainer>
+                <StyledAccomodationsContainer $spinner={true}>
                     <Spinner />
                 </StyledAccomodationsContainer>
             </>
         );
 
-
-    const double = [...cabins];
-
     return (
         <>
             <StyledAccomodationsContainer>
-                {double.map((accomodation, index) => {
+                {cabins.map((accomodation, index) => {
                     return (
                         <AccommoidationItem
                             key={index}

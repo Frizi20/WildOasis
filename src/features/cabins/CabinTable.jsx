@@ -4,14 +4,17 @@ import Table from "../../ui/Table";
 import Menus from "../../ui/Menus";
 import { useSearchParams } from "react-router-dom";
 import Spinner from "../../ui/Spinner";
+import useFacilities from "./useFacilities";
 
 function CabinTable() {
     // 1. FILTER
 
     const { isLoading, cabins } = useCabins();
+    const { facilities, isLoading:isLoadingFacilities } = useFacilities()
+
     const [searchParams] = useSearchParams();
 
-    if (isLoading) return <Spinner />;
+    if (isLoading || isLoadingFacilities) return <Spinner />;
 
     const filter = searchParams.get("discount") || "all";
 
@@ -49,7 +52,7 @@ function CabinTable() {
                 <Table.Body
                     data={sortedCabins}
                     render={(cabin) => {
-                        return <CabinRow cabin={cabin} key={cabin.id} />;
+                        return <CabinRow cabin={cabin} key={cabin.id}  />;
                     }}
                 />
             </Table>

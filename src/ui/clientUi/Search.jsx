@@ -10,6 +10,12 @@ const StyledSearch = styled.div`
     border: 1px solid gainsboro;
     position: relative;
     box-shadow: 0px 1px 0px 0px #dcdcdcb0;
+
+    ${(props) =>
+        props.$isMobile &&
+        css`
+            width: 100%;
+        `}
 `;
 
 const Right = styled.div`
@@ -24,13 +30,19 @@ const Left = styled.div`
     overflow: hidden;
     border-top-left-radius: 50px;
     border-bottom-left-radius: 50px;
+
+    ${(props) =>
+        props.$isMobile &&
+        css`
+            width: 100%;
+        `}
 `;
 
 const Input = styled.input`
     padding: 5px 15px;
     height: 100%;
     border: none;
-    
+
     outline: 1px gray;
 
     position: relative;
@@ -61,6 +73,7 @@ const Input = styled.input`
         css`
             border-top-left-radius: 50px;
             border-bottom-left-radius: 50px;
+            /* width: 140px; */
         `}
 
     ${(props) =>
@@ -69,11 +82,15 @@ const Input = styled.input`
             border-top-right-radius: 50px;
             border-bottom-right-radius: 50px;
         `}
+
+
     
-    @media screen and (max-width: 700px){
-        ${(props)=> props.$hide === true && css`
-            display: none;
-        `}
+    @media screen and (max-width: 700px) {
+        ${(props) =>
+            props.$hide === true &&
+            css`
+                display: none;
+            `}
     }
 
     &:focus {
@@ -96,26 +113,26 @@ const StyledButton = styled.button`
     margin-right: 5.7px;
 `;
 
-export default function Search() {
+export default function Search({ isMobile }) {
     return (
-        <StyledSearch>
-            <Left>
+        <StyledSearch $isMobile={isMobile}>
+            <Left $isMobile={isMobile}>
                 <Input
                     radius="left"
                     type="text"
                     name=""
                     id=""
-                    placeholder="destination"
+                    placeholder="Search..."
                 />
             </Left>
-            <Input
+            {/* <Input
                 $hide={true}
                 border="center"
                 placeholder="Start date"
                 type="date"
                 name=""
                 id=""
-            />
+            /> */}
             {/* <Input
                 radius="right"
                 placeholder="End date"

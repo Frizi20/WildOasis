@@ -50,7 +50,7 @@ const ListUl = styled.ul`
     transition: 0.3s all linear;
     flex: 1;
     display: flex;
-    gap: 10px;
+    gap: 5px;
     position: absolute;
     transform: translateX(0);
     /* left: 0; */
@@ -71,6 +71,7 @@ export default function ItemsCarusel({ children }) {
         listDom.current.style.transform = `translateX( ${
             transformX + 300 * dir
         }px)`;
+
         console.log(width);
     }
 

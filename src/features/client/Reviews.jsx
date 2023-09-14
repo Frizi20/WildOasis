@@ -65,7 +65,7 @@ const ProgressBarrRow = styled.div`
     }
 `;
 
-export default function Reviews({ reviews }) {
+export default function Reviews({ reviews = 5 }) {
     const nrReviews = reviews.length;
     const grade =
         Math.round(

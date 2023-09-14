@@ -13,7 +13,6 @@ export default function useCreateReview() {
             return apiCreateReview({ rating, comment, userId, cabinId: id });
         },
         onSuccess: (data) => {
-            console.log(data);
             toast.success("Review created");
             queryClient.invalidateQueries({
                 queryKey:['accommodation']

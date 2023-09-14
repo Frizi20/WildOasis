@@ -54,18 +54,20 @@ const StyledUserReview = styled.div`
     & .date {
         font-size: 1.3rem;
         color: #4d4d4d;
+        letter-spacing: 1px;
     }
 
     & .comment {
         /* line-height: 24px; */
-        font-size: 1.4rem;
-        padding-top: 5px;
+        font-size: 1.3rem;
+        padding: 5px;
     }
 `;
 
-function formatDate(date) {
-    return format(new Date(date), "dd.MM.YYY H:ii:ss");
+export function formatDate(date) {
+    return format(new Date(date), "d MMM YYY");
 }
+
 
 export default function UserReview({ review }) {
     const {

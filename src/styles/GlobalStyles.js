@@ -128,7 +128,7 @@ export default createGlobalStyle`
 }
 
 html {
-  font-size: 62.5%;
+  font-size: 60.5%;
 }
 
 body {
@@ -202,6 +202,9 @@ img {
   /* For dark mode */
   filter: grayscale(var(--image-grayscale)) opacity(var(--image-opacity));
 }
+
+
+
 
 /*
 FOR DARK MODE

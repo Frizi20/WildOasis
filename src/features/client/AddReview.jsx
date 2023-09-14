@@ -4,18 +4,19 @@ import Button from "../../ui/Button";
 import useCreateReview from "./useCreateReview";
 import { useUser } from "../authentication/useUser";
 import { useParams } from "react-router-dom";
+import { StarRating } from "../../ui/StarRating";
 
 const FormContainer = styled.div`
-    border: 1px solid gainsboro;
-    padding: 30px;
+    /* border: 1px solid gainsboro; */
+    padding: 10px;
     display: flex;
     align-items: center;
     flex-direction: column;
     width: 500px;
     margin: 0 auto;
     margin-top: 30px;
-
-    gap: 10px;
+    max-width: 100%;
+    gap: 15px;
 
     & select {
         width: 100%;
@@ -23,12 +24,16 @@ const FormContainer = styled.div`
 
     & textarea {
         width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        outline: 1px solid gainsboro;
+        border: none;
     }
 `;
 
-export default function AddReview() {
-    const [comment, setComment] = useState("zxczx");
-    const [rating, setRating] = useState(5);
+export default function AddReview({ onCloseModal }) {
+    const [comment, setComment] = useState("");
+    const [rating, setRating] = useState("");
 
     const { createReview, isCreating } = useCreateReview();
     const { user, isLoading } = useUser();
@@ -36,15 +41,29 @@ export default function AddReview() {
     if (isLoading) return null;
 
     function submitReview() {
+        if (!comment || !rating) return;
+
         createReview({
             comment,
             rating,
             userId: user.id,
         });
+
+        onCloseModal?.();
+    }
+
+    function onRatingChange(rating) {
+        setRating(rating);
     }
 
     return (
         <FormContainer>
+            <StarRating
+                updateRating={true}
+                size={40}
+                onStarRatingChange={onRatingChange}
+            />
+
             <textarea
                 name=""
                 id=""
@@ -56,20 +75,6 @@ export default function AddReview() {
                     setComment(e.target.value);
                 }}
             />
-            <select
-                name=""
-                id=""
-                value={rating}
-                onChange={(e) => {
-                    setRating(e.target.value);
-                }}
-            >
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
 
             <Button onClick={submitReview}>Review</Button>
         </FormContainer>

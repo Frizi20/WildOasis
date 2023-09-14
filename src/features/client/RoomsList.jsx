@@ -64,12 +64,17 @@ const icons = [
 ];
 
 const StyledRoomsList = styled.div`
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    display: flex;
+    flex-wrap: wrap;
     gap: 10px;
+
+ 
 `;
 
 const StyledRoomItem = styled.div`
+
+    flex: 1;
+
     padding: 20px;
     display: grid;
     flex-direction: column;
@@ -87,12 +92,12 @@ const StyledRoomItem = styled.div`
         width: 30px;
     }
 
-    & .room-type{
+    & .room-type {
         font-size: 1.9rem;
         text-align: center;
     }
 
-    & .room-details{
+    & .room-details {
         color: #8b8b8b;
         font-size: 1.2rem;
         text-align: center;
@@ -115,12 +120,8 @@ function RoomItem({ room }) {
             <div className="icon">
                 <BiBed />
             </div>
-            <div className="room-type">
-                Bedroom
-            </div>
-            <div className="room-details">
-                1 double bed, 1 single bed
-            </div>
+            <div className="room-type">Bedroom</div>
+            <div className="room-details">1 double bed, 1 single bed</div>
         </StyledRoomItem>
     );
 }

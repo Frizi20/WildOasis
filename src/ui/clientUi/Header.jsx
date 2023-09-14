@@ -3,6 +3,8 @@ import Search from "./Search";
 import Logo from "../Logo";
 
 import { HiOutlineMenu } from "react-icons/hi";
+import { useUser } from "../../features/authentication/useUser";
+import ClientAvatar from "./css/ClientAvatar";
 
 const StyledHeader = styled.header`
     display: flex;
@@ -10,6 +12,8 @@ const StyledHeader = styled.header`
     align-items: center;
     padding: 20px 0;
     background-color: #fff;
+    border-bottom: 1px solid #ececec;
+    margin-bottom: 10px;
 `;
 
 const AvatarContainer = styled.div`
@@ -18,7 +22,7 @@ const AvatarContainer = styled.div`
     align-items: center;
     justify-content: center;
     gap: 9px;
-    padding: 4px 13px;
+    padding: 4px 12px;
     border: 1px solid #7e7e7e;
     border-radius: 50px;
     user-select: none;
@@ -29,32 +33,30 @@ const AvatarContainer = styled.div`
     }
 `;
 
-const Avatar = styled.img`
-    display: block;
-    width: 4rem;
-    width: 2.5rem;
-    aspect-ratio: 1;
-    object-fit: cover;
-    object-position: center;
-    border-radius: 50%;
-    outline: 2px solid var(--color-grey-100);
-`;
-
 const LogoContainer = styled.div`
     cursor: pointer;
 `;
 
-export default function Header() {
+export default function Header({ isMobile }) {
+    const { isLoading, user } = useUser();
+
+    if (isLoading) return null;
+
     return (
         <StyledHeader>
-            <LogoContainer>
-                <Logo height={70} noTitle={true} />
-            </LogoContainer>
-            <Search />
-            <AvatarContainer>
-                <HiOutlineMenu />
-                <Avatar src="/default-user.jpg" />
-            </AvatarContainer>
+            {!isMobile && (
+                <LogoContainer>
+                    <Logo height={60} noTitle={true} />
+                </LogoContainer>
+            )}
+            <Search isMobile={isMobile} />
+            {!isMobile && (
+                <AvatarContainer>
+                    <HiOutlineMenu />
+                    {/* <Avatar src="/de fault-user.jpg" /> */}
+                    <ClientAvatar />
+                </AvatarContainer>
+            )}
         </StyledHeader>
     );
 }

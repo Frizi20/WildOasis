@@ -3,9 +3,13 @@ import Header from "./Header";
 import ClientNav from "./ClientNav";
 import { Outlet } from "react-router-dom";
 import Footer from "./Footer";
+import { useEffect, useState } from "react";
+import PageHeader from "../../features/client/PageHeader";
+import { useMediaQuery } from "react-responsive";
+import MobileHeader from "./MobileHeader";
 
 const StyledClientLayout = styled.div`
-    padding: 0 80px;
+    /* padding: 0 80px; */
     display: flex;
     justify-content: center;
     padding-bottom: 50px;
@@ -13,7 +17,6 @@ const StyledClientLayout = styled.div`
     @media screen and (max-width: 1500px) {
         padding: 0 40px;
     }
-
 
     @media screen and (max-width: 750px) {
         padding: 0 25px;
@@ -38,19 +41,22 @@ const FixedHeader = styled.div`
 
 const Container = styled.div``;
 
-export default function ClientLayout() {
+export default function ClientLayout({ withNav = false }) {
+    const isMobile = useMediaQuery({ query: "(max-width: 590px)" });
+    console.log(isMobile);
     return (
         <StyledClientLayout>
             <PageContainer>
                 <FixedHeader>
-                    <Header />
-                    <ClientNav />
+                    <Header isMobile={isMobile} />
+                    {withNav && <ClientNav />}
                 </FixedHeader>
 
                 <Container>
                     <Outlet />
                 </Container>
-                {/* <Footer /> */}
+
+                {isMobile && <MobileHeader />}
             </PageContainer>
         </StyledClientLayout>
     );

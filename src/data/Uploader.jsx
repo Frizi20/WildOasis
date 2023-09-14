@@ -87,7 +87,7 @@ async function createBookings() {
       ...booking,
       numNights,
       cabinPrice,
-      extrasPrice,
+    extrasPrice,
       totalPrice,
       guestId: allGuestIds.at(booking.guestId - 1),
       cabinId: allCabinIds.at(booking.cabinId - 1),
