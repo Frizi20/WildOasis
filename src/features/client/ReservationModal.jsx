@@ -14,6 +14,9 @@ const ReserveModalContainer = styled.div`
     flex: 0 0 37%;
     position: relative;
     padding: 15px 0 15px 40px;
+    min-width: 400px;
+    height: 200px;
+    
 
     & .reservation-modal {
         position: sticky;
@@ -98,10 +101,6 @@ const ReserveModalContainer = styled.div`
         padding: 2px 0;
         font-size: 1.4rem;
     }
-
-    @media screen and (max-width: 982px) {
-        display: none;
-    }
 `;
 
 const Center = styled.div`
@@ -128,7 +127,7 @@ const GuestsInput = styled.div`
         height: fit-content;
         transform: translateY(100%);
         padding-bottom: 10px;
-        border-radius: 5px;
+        border-radius: 5px; 
         padding: 5px;
     }
 `;

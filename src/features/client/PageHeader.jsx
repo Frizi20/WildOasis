@@ -15,8 +15,11 @@ const H2 = styled.h2`
 `;
 const ButtonContainer = styled.div`
     position: absolute;
-    left: -20px;
-    transform: translateX(-100%);
+
+    /* transform: translateY( calc(-100% - 10px) ); */
+    left: -35px;
+
+    /* transform: translateX(-100%); */
 `;
 
 export default function PageHeader({ children }) {

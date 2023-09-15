@@ -46,7 +46,9 @@ export default function AccommoidationItem({ accommodation }) {
     const showSliderGalery = useMediaQuery({ query: "(max-width: 1090px)" });
 
     const [isHovered, setIsHovered] = useState(false);
-    const { regularPrice, reviews, id, images, location } = accommodation;
+    const { regularPrice, reviews, id, images, location,title, description } = accommodation;
+
+    console.log(accommodation);
     const { toggleItem, favoriteItems } = useFavorites();
 
     const isFavorite = favoriteItems.includes(id);
@@ -103,8 +105,9 @@ export default function AccommoidationItem({ accommodation }) {
 
                 <div className="price-max">
                     <div className="suggestion-interval">
-                        <span className="from">10 Sept</span>-
-                        <span className="to">20 Sept</span>
+                        {/* <span className="from">10 Sept</span>-
+                        <span className="to">20 Sept</span> */}
+                        {title}
                     </div>
                 </div>
 

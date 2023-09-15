@@ -62,6 +62,10 @@ ${(props)=>
     sizes[props.size] 
   }
 
+  ${(props)=> props.$color && css`
+    background-color: ${props.$color};
+  `}
+
 `;
 
 Button.defaultProps = {

@@ -2,6 +2,8 @@ import { HiArrowLeft } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 
+import {MdOutlineArrowBackIosNew} from 'react-icons/md'
+
 const Icon = styled.button`
     outline: none;
     /* background-color: red; */
@@ -10,7 +12,7 @@ const Icon = styled.button`
     background: transparent;
 
     border-radius: 50%;
-    border: 1px solid gainsboro;
+    /* border: 1px solid gainsboro; */
     padding: 10px;
     cursor: pointer;
     /* transform: translateX); */
@@ -25,7 +27,7 @@ export default function BackButton({to}) {
                 navigate(to || -1);
             }}
         >
-            <HiArrowLeft />
+            <MdOutlineArrowBackIosNew />
         </Icon>
     );
 }

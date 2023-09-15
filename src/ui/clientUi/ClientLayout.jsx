@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import PageHeader from "../../features/client/PageHeader";
 import { useMediaQuery } from "react-responsive";
 import MobileHeader from "./MobileHeader";
+import MobileNavList from "../../features/client/MobileNavList";
 
 const StyledClientLayout = styled.div`
     /* padding: 0 80px; */
@@ -19,7 +20,7 @@ const StyledClientLayout = styled.div`
     }
 
     @media screen and (max-width: 750px) {
-        padding: 0 25px;
+        padding: 0 35px;
     }
 `;
 
@@ -43,7 +44,6 @@ const Container = styled.div``;
 
 export default function ClientLayout({ withNav = false }) {
     const isMobile = useMediaQuery({ query: "(max-width: 590px)" });
-    console.log(isMobile);
     return (
         <StyledClientLayout>
             <PageContainer>
@@ -55,8 +55,6 @@ export default function ClientLayout({ withNav = false }) {
                 <Container>
                     <Outlet />
                 </Container>
-
-                {isMobile && <MobileHeader />}
             </PageContainer>
         </StyledClientLayout>
     );

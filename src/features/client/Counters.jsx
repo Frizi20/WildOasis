@@ -128,7 +128,6 @@ const guestsState2 = {
 
 function reducer(state, action) {
     if (action.type === "increment") {
-        console.log(state.totalGuests);
         if (state.totalGuests + 1 > state.maxCapacity) return state;
         // console.log(state);
         const newOptions = state.options.map((option) => {
@@ -216,6 +215,7 @@ function Counters({ children, opened = false, isInModal, onChange }) {
 
     useEffect(() => {
         // console.log(getNrGuests());
+        console.log(state);
         onChange?.(state.totalGuests);
     }, [state]);
 
@@ -284,7 +284,7 @@ function GuestsForm() {
         useContext(GuestsContext);
 
     const { modal } = useOutsideClick(() => {
-        setIsOpened(false);
+        !isInModal && setIsOpened(false);
     });
 
     return (

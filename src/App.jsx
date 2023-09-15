@@ -41,7 +41,7 @@ export default function App() {
         <DarkModeProvider>
             <FavoritesProvider>
                 <QueryClientProvider client={queryClient}>
-                    <ReactQueryDevtools initialIsOpen={true} />
+                    {/* <ReactQueryDevtools initialIsOpen={true}  /> */}
                     <GlobalStyles />
                     <LocalizationProvider
                         dateAdapter={AdapterDayjs}

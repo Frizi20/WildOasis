@@ -4,6 +4,9 @@ import useCabins from "../cabins/useCabins";
 import Spinner from "../../ui/Spinner";
 import { css } from "styled-components";
 import { useEffect } from "react";
+import MobileHeader from "../../ui/clientUi/MobileHeader";
+import MobileNavList from "./MobileNavList";
+import { useMediaQuery } from "react-responsive";
 
 const StyledAccomodationsContainer = styled.div`
     /* flex: 0 0 200px; */
@@ -52,6 +55,8 @@ const StyledAccomodationsContainer = styled.div`
 export default function Accommodations() {
     const { cabins, isLoading } = useCabins();
 
+    const isMobile = useMediaQuery({ query: "(max-width: 590px)" });
+
     if (isLoading)
         return (
             <>
@@ -72,6 +77,11 @@ export default function Accommodations() {
                         />
                     );
                 })}
+                {isMobile && (
+                    <MobileHeader>
+                        <MobileNavList />
+                    </MobileHeader>
+                )}
             </StyledAccomodationsContainer>
         </>
     );

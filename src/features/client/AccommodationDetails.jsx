@@ -20,12 +20,14 @@ import BackButton from "../../ui/BackButton";
 import { useSettings } from "../settings/useSettings";
 import Button from "../../ui/Button";
 import Modal from "../../ui/Modal";
+import MobileHeader from "../../ui/clientUi/MobileHeader";
+import MakeReservationMobile from "./MakeReservationMobile";
 
 const PageWrapper = styled.div`
     width: 1100px;
     max-width: 100%;
     margin: 0 auto;
-    padding-bottom: 100px;
+    padding-bottom: 150px;
 `;
 
 const GeneralDetailsContainer = styled.div``;
@@ -39,7 +41,12 @@ const GeneralDetails = styled.div`
 
     & .back-btn {
         position: absolute;
-        left: -50px;
+        left: -35px;
+        top: 3px;
+    }
+
+    & .general-details {
+        padding: 10px 0;
     }
 
     ${(props) =>
@@ -113,8 +120,8 @@ const Details = styled.div`
     }
 
     & .hoast-details .hoast-avatar {
-        flex: 1;
-        aspect-ratio: 1/1;
+        /* flex: 1; */
+        /* aspect-ratio: 1/1; */
         display: flex;
         align-items: center;
         justify-content: center;
@@ -122,8 +129,8 @@ const Details = styled.div`
         overflow: hidden;
         border: 1px solid grey;
 
-        height: 40px;
-        width: 40px;
+        height: 50px;
+        width: 50px;
     }
 
     & .activity {
@@ -190,6 +197,8 @@ const StyledButton = styled.div`
 
 export default function AccommodationDetails() {
     const showSliderGalery = useMediaQuery({ query: "(max-width: 1090px)" });
+    const isMobile = useMediaQuery({ query: "(max-width: 862px)" });
+
     const [showMore, setShowMore] = useState(false);
 
     const { isLoading, data: accommodation } = useCabin();
@@ -227,17 +236,21 @@ export default function AccommodationDetails() {
                     <div className="general-details">
                         <div className="info">
                             <div className="rating">
-                                <HiStar /> {grade}
+                                <HiStar /> {nrReviews < 1 ? "New" : grade}
                             </div>
-                            <div className="dot">
-                                <> &middot;</>
-                            </div>
-                            <div className="reviews">
-                                {reviews.length} reviews
-                            </div>
-                            <div className="dot">
-                                <> &middot;</>
-                            </div>
+                            {nrReviews > 0 && (
+                                <>
+                                    <div className="dot">
+                                        <> &middot;</>
+                                    </div>
+                                    <div className="reviews">
+                                        {reviews.length} reviews
+                                    </div>
+                                    <div className="dot">
+                                        <> &middot;</>
+                                    </div>
+                                </>
+                            )}
                             <div className="location">{location}</div>
                         </div>
                         <div className="btns">
@@ -314,11 +327,12 @@ export default function AccommodationDetails() {
                             <RoomsList />
                         </Row>
                     </Details>
-
-                    <ReservationModal
-                        accommodation={accommodation}
-                        settings={settings}
-                    />
+                    {!isMobile && (
+                        <ReservationModal
+                            accommodation={accommodation}
+                            settings={settings}
+                        />
+                    )}
                 </HorizontalWrapper>
 
                 {reviews.length > 0 ? (
@@ -334,7 +348,9 @@ export default function AccommodationDetails() {
                 <Modal>
                     <Modal.Open opens="add-review">
                         <StyledButton>
-                            <Button size="large">Add review</Button>
+                            <Button size="large" $color="#3d3d3d">
+                                Add review
+                            </Button>
                         </StyledButton>
                     </Modal.Open>
                     <Modal.Window name="add-review">
@@ -342,6 +358,16 @@ export default function AccommodationDetails() {
                     </Modal.Window>
                 </Modal>
             </DetailsWrapper>
+
+            {isMobile && (
+                <MobileHeader type={"static"} height={85}>
+                    <MakeReservationMobile
+                        accommodation={accommodation}
+                        settings={settings}
+                        cabinId={accommodation.id}
+                    />
+                </MobileHeader>
+            )}
         </PageWrapper>
     );
 }

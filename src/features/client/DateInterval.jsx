@@ -1,12 +1,17 @@
 import dayjs from "dayjs";
 import { styled } from "styled-components";
 import CustomDatePicker from "../../ui/CustomDatePicker";
-import useQueryParams from "../../hooks/useQueryParams";
+import { useSearchParams } from "react-router-dom";
 
 const Container = styled.div`
     display: flex;
     align-items: center;
     gap: 10px;
+    /* min-width: 400px; */
+    justify-content: space-evenly;
+    /* max-width: 100%; */
+    width: 300px;
+    max-width: 100%;
 `;
 
 export default function DateInterval({
@@ -15,9 +20,14 @@ export default function DateInterval({
     setStartDate,
     setEndDate,
 }) {
+
+    const [searchParams,setSearchParams] = useSearchParams()
+
+    
     return (
         <Container>
             <CustomDatePicker
+              
                 label="Start date"
                 defaultValue={dayjs(startDate)}
                 maxDate={dayjs(endDate).subtract(1, "day")}

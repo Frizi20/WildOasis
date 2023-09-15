@@ -4,7 +4,7 @@ import CreditCardForm from "./CreditCardForm";
 import useQueryParams from "../../hooks/useQueryParams";
 import Button from "../../ui/Button";
 import { HiStar } from "react-icons/hi2";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import useCabin from "../cabins/useCabin";
 import Spinner from "../../ui/Spinner";
 import dayjs from "dayjs";
@@ -13,7 +13,7 @@ import { useSettings } from "../settings/useSettings";
 import { formatCurrency } from "../../utils/helpers";
 import Modal from "../../ui/Modal";
 import DateInterval from "./DateInterval";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import GuestsForm from "./Counters";
 import Counters from "./Counters";
 
@@ -36,6 +36,11 @@ import Counters from "./Counters";
 
 const Container = styled.div`
     display: flex;
+    padding-bottom: 50px;
+
+    @media screen and (max-width: 1012px) {
+        flex-direction: column-reverse;
+    }
     /* min-height: 500px; */
 `;
 
@@ -47,6 +52,10 @@ const OverviewContainer = styled.div`
     flex: 1;
     padding-left: 50px;
     position: relative;
+
+    @media screen and (max-width: 1012px) {
+        padding: 0;
+    }
 `;
 
 const OverviewModal = styled.div`
@@ -200,6 +209,8 @@ export default function BookingDetails() {
         guestsCount,
     } = useQueryParams("startDate", "endDate", "guestsCount");
 
+    const [searchParams, setSearchParams] = useSearchParams();
+
     const [startDate, setStartDate] = useState(() => {
         return dayjs(startDateQuery).format();
     });
@@ -215,6 +226,13 @@ export default function BookingDetails() {
     const { isLoading: isLoadingSettings, settings: { serviceFee } = {} } =
         useSettings();
 
+    useEffect(() => {
+        searchParams.set("startDate", dayjs(startDate).format());
+        searchParams.set("endDate", dayjs(endDate).format());
+
+        setSearchParams(searchParams, { replace: true });
+    }, [startDate, endDate, searchParams, setSearchParams]);
+
     if (isLoading || isLoadingSettings) return <Spinner />;
 
     const { images, location, title, profile, regularPrice, reviews } = data;
@@ -228,7 +246,7 @@ export default function BookingDetails() {
         ) / 100;
 
     function handleGuestsChange(nrGuests) {
-        setNrGuests(nrGuests)
+        setNrGuests(nrGuests);
     }
 
     return (
@@ -270,21 +288,7 @@ export default function BookingDetails() {
                                     <div className="label">
                                         Number of people
                                     </div>
-
                                     <Counters.Label />
-                                    {/* <div className="value">
-                                    {guests.options.map((option, i, arr) => {
-                                        if (option.count == 0) return;
-                                        return (
-                                            <span key={option.id}>
-                                                {option.count}{" "}
-                                                {option.count > 1
-                                                    ? option.label
-                                                    : option.labelSingular}{" "}
-                                            </span>
-                                        );
-                                    })}
-                                </div> */}
                                 </div>
                                 <Modal.Open
                                     opens={"edit-people"}
@@ -359,7 +363,10 @@ export default function BookingDetails() {
                         </div>
 
                         <div className="row">
-                            <div> <u>Website fee</u> </div>
+                            <div>
+                                {" "}
+                                <u>Website fee</u>{" "}
+                            </div>
                             <div>{formatCurrency(serviceFee)}</div>
                         </div>
                     </div>
