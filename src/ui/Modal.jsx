@@ -17,8 +17,11 @@ const StyledModal = styled.div`
     padding: 3.2rem 4rem;
     transition: all 0.5s;
     max-height: calc(100% - 100px);
-    overflow: auto;
+    overflow-y: auto;
     max-width: calc(100% - 50px);
+
+    /* display: flex;
+    flex-direction: column; */
 `;
 
 const Overlay = styled.div`
@@ -29,10 +32,9 @@ const Overlay = styled.div`
     height: 100vh;
     background-color: var(--backdrop-color);
     backdrop-filter: blur(4px);
-    z-index: 1000;
-    transition: all 0.5s;
-
-    
+    /* transition: all 0.5s; */
+    transition: none;
+    z-index: 200;
 `;
 
 const Button = styled.button`
@@ -81,9 +83,9 @@ function Open({ children, opens: opensWindowName }) {
     return cloneElement(children, { onClick: () => open(opensWindowName) });
 }
 
-function Window({ children, name, closeOutisde = true}) {
+function Window({ children, name, closeOutisde = true }) {
     const { openName, close } = useContext(ModalContext);
-    const {modal, overlay} = useOutsideClick(close, undefined, closeOutisde);
+    const { modal, overlay } = useOutsideClick(close, undefined, closeOutisde);
 
     if (name !== openName) return null;
 
@@ -94,13 +96,11 @@ function Window({ children, name, closeOutisde = true}) {
                     <HiXMark />
                 </Button>
 
-                <div>{cloneElement(children, { onCloseModal: close })}</div>
+                {cloneElement(children, { onCloseModal: close })}
             </StyledModal>
         </Overlay>,
         document.body
     );
-    
-
 }
 
 Modal.Open = Open;

@@ -8,6 +8,8 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import useQueryParams from "../../hooks/useQueryParams";
 import { formatCurrency } from "../../utils/helpers";
 import Counters from "./Counters";
+import { useCallback } from "react";
+import { useMemo } from "react";
 
 const ReserveModalContainer = styled.div`
     background-color: #ffffff;
@@ -16,7 +18,6 @@ const ReserveModalContainer = styled.div`
     padding: 15px 0 15px 40px;
     min-width: 400px;
     height: 200px;
-    
 
     & .reservation-modal {
         position: sticky;
@@ -127,10 +128,14 @@ const GuestsInput = styled.div`
         height: fit-content;
         transform: translateY(100%);
         padding-bottom: 10px;
-        border-radius: 5px; 
+        border-radius: 5px;
         padding: 5px;
     }
 `;
+
+// function disableBookedDates(date) {
+//     console.log(date.format("DD"));
+// }
 
 export default function ReservationModal({ accommodation, settings }) {
     const navigate = useNavigate();
@@ -153,6 +158,20 @@ export default function ReservationModal({ accommodation, settings }) {
     const { regularPrice } = accommodation;
 
     const { id: cabinId } = useParams();
+
+    const disableBookedDates = useCallback((date) => {
+        let isDisabled = false;
+        accommodation.cabin_bookings.forEach((booking) => {
+            if (
+                dayjs(booking.startDate).isBefore(dayjs(date)) &&
+                dayjs(date).isBefore(dayjs(booking.endDate))
+            ) {
+                isDisabled = true;
+            }
+        });
+
+        return isDisabled;
+    }, []);
 
     useEffect(() => {
         getSearchParams.set("startDate", startDate.format());
@@ -190,6 +209,9 @@ export default function ReservationModal({ accommodation, settings }) {
                             onChange={(newValue) => setStartDate(newValue)}
                             disablePast
                             maxDate={endDate.subtract(1, "day")}
+                            shouldDisableDate={(date) => {
+                                return disableBookedDates(date);
+                            }}
                         />
                     </div>
                     <div className="to-date">
@@ -199,6 +221,9 @@ export default function ReservationModal({ accommodation, settings }) {
                             onChange={(newValue) => setEndDate(newValue)}
                             disablePast
                             minDate={startDate.add(1, "day")}
+                            shouldDisableDate={(date) => {
+                                return disableBookedDates(date);
+                            }}
                         />
                     </div>
                     <div className="nr-people">

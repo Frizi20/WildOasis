@@ -47,6 +47,7 @@ export function StarRating({
     color = "#00677a",
     onStarRatingChange,
     updateRating = false,
+    className= ''
 }) {
     const [currRating, setCurrRating] = useState(rating);
     const [tempRating, setTempRating] = useState(rating);
@@ -78,6 +79,7 @@ export function StarRating({
 
     return (
         <StarsContainer
+            className={className}
             $starSize={size}
             $color={color}
             $cursorPointer={updateRating}

@@ -41,7 +41,7 @@ function BookingDetail() {
     if (isLoading) return <Spinner />;
 
     // console.log(booking);
-    if(!booking) return <Empty resourceName='booking' />
+    if (!booking) return <Empty resourceName="booking" />;
 
     const { status, id: bookingId } = booking;
 

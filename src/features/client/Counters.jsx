@@ -8,10 +8,11 @@ import { useEffect } from "react";
 import { useIsMount } from "../../hooks/isMount";
 
 const Container = styled.div`
-    min-width: 300px;
+    width: 300px;
+    max-width: 100%;
     position: absolute;
     background-color: #fff;
-    width: calc(100% + 4px);
+    /* width: calc(100% + 4px); */
     border: 1px solid gainsboro;
     left: -2px;
     border-radius: 5px;
@@ -214,8 +215,6 @@ function Counters({ children, opened = false, isInModal, onChange }) {
     }
 
     useEffect(() => {
-        // console.log(getNrGuests());
-        console.log(state);
         onChange?.(state.totalGuests);
     }, [state]);
 
@@ -251,7 +250,7 @@ const Input = styled.div`
     /* min-height: 35px; */
     border-radius: 5px;
     font-size: 1.5rem;
-    padding: 10px;
+    /* padding: 10px; */
     display: flex;
     align-items: center;
     justify-content: space-between;

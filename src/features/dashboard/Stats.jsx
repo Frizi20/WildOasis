@@ -23,6 +23,7 @@ export default function Stats({
 
     const checkIns = confirmedStays.length;
 
+
     const occupancyRate = confirmedStays.reduce(
         (acc, curr) => acc + curr.numNights,
         0

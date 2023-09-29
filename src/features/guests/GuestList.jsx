@@ -35,6 +35,8 @@ function GuestList({ onClick }) {
   if (count === undefined) return null;
   if (count === 0) return <p>No guests found...</p>;
 
+  console.log(guests);
+
   return (
     <StyledGuestList>
       <List>

@@ -50,10 +50,12 @@ const Arrow = styled.div`
 
 const ArrowLeft = styled(Arrow)`
     left: 5px;
+    z-index: 200;
 `;
 
 const ArrowRight = styled(Arrow)`
     right: 5px;
+    z-index: 200;
 `;
 
 const NavigationContainer = styled.div`
@@ -83,9 +85,13 @@ const NavigationDot = styled.div`
 
 export default function Slider({ isHovered, images }) {
     const [currItem, setCurrItem] = useState(0);
-    const [key, setKey] = useState(0)
     const track = useRef();
     const nrImages = images.length;
+
+    const isClicked = useRef(0);
+    const initialPos = useRef(0);
+
+    const firstImgPos = useRef(0);
 
     useEffect(() => {
         const images = Array.from(track.current.children);
@@ -94,8 +100,12 @@ export default function Slider({ isHovered, images }) {
         images.forEach((image, index) => {
             image.style.left = (index - currItem) * width + "px";
             image.style.zIndex = index * -1;
+
+            if (index === currItem) {
+                image.style.zIndex = "2";
+            }
         });
-    }, [currItem,key]);
+    }, [currItem]);
 
     // console.log('render');
 
@@ -110,7 +120,7 @@ export default function Slider({ isHovered, images }) {
     //         window.removeEventListener('resize', resize)
     //     }
     // },[])
-  
+
     const moveRight = function () {
         setCurrItem((prev) => prev + 1);
     };
@@ -119,8 +129,34 @@ export default function Slider({ isHovered, images }) {
         setCurrItem((prev) => prev - 1);
     };
 
+    const onHover = function (e) {
+        const { left, top } = track.current.getBoundingClientRect();
+        const images = Array.from(track.current.children);
+
+        const clientX = e.touches[0].clientX;
+
+        if (isClicked.current) {
+            const x = clientX - initialPos.current;
+
+            images.forEach((img) => {
+                const currImgPos = Number(img.style.left.replace("px", ""));
+
+                img.style.transition = "none";
+
+                img.style.left =
+                    currImgPos + (clientX - initialPos.current) + "px";
+
+                // const compStyle = window.getComputedStyle(img)
+                // console.log(compStyle.getPropertyValue('left'));
+            });
+        }
+
+        // console.log({ clientX });
+        // console.log({ left });
+    };
+
     return (
-        <SliderContainer >
+        <SliderContainer draggable="false">
             {isHovered && currItem > 0 && (
                 <ArrowLeft
                     onClick={(e) => {
@@ -132,9 +168,28 @@ export default function Slider({ isHovered, images }) {
                 </ArrowLeft>
             )}
 
-            <ItemsTrack ref={track}>
+            <ItemsTrack
+                draggable="false"
+                ref={track}
+                // onTouchMove={onHover}
+                onTouchStart={(e) => {
+                    isClicked.current = true;
+                    initialPos.current = e.touches[0].clientX;
+                }}
+                onTouchEnd={() => {
+                    isClicked.current = false;
+                    initialPos.current = 0;
+                }}
+            >
                 {images.map((img) => {
-                    return <img src={img?.image} alt="" key={img.id} />;
+                    return (
+                        <img
+                            draggable="false"
+                            src={img?.image}
+                            alt=""
+                            key={img.id}
+                        />
+                    );
                 })}
             </ItemsTrack>
             {isHovered && currItem + 1 < nrImages && (

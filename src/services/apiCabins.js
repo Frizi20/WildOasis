@@ -8,8 +8,7 @@ function setImagePath(imageName) {
     return `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}`;
 }
 
-/*
-
+/* 
     preparedImages = {
         fileUpload: [
             {
@@ -23,7 +22,6 @@ function setImagePath(imageName) {
             }
         ]
     }
-
  */
 
 export function prepareImages(images, cabinId) {
@@ -45,7 +43,7 @@ export function prepareImages(images, cabinId) {
                 cabin_id: cabinId,
                 image: imgPath,
             });
-        }else{
+        } else {
             dbImages.push({
                 name: img.name,
                 cabin_id: cabinId,
@@ -60,15 +58,61 @@ export function prepareImages(images, cabinId) {
     };
 }
 
-export async function getCabins() {
-    const { data, error } = await supabase
+export async function getCabins({
+    search,
+    ids,
+    facilities,
+    range,
+    guests,
+    property,
+}) {
+    let query = supabase
         .from("cabins")
         .select("*,reviews(*), cabins_facilities(facilities(*)), images(*)")
         .order("id", { ascending: false });
 
+    if (range) {
+        const [min, max] = range;
+
+        if (max > 0) {
+            query = query.gt("regularPrice", min).lt("regularPrice", max);
+        } else {
+            query = query.gt("regularPrice", min);
+        }
+    }
+
+    if (property) {
+        query = query.eq("property", property);
+    }
+
+    if (guests) {
+        query = query.gte("maxCapacity", guests);
+    }
+
+    // if(facilities) {
+    //     query = query.select('*,reviews(*), cabins_facilities!inner(facilities(*)), images(*)')
+    //     .order('id',{ascending:false})
+    // }
+
+    if (ids) query = query.in("id", ids);
+
+    if (search) query = query.ilike("location", `%${search}%`);
+
+    const { data, error } = await query;
+
     if (error) {
         console.error(error);
         throw new Error("Cabbins could not be loaded");
+    }
+
+    return data;
+}
+
+export async function getCabinsSuggestions({ search }) {
+    const { data, error } = await supabase.rpc("get_suggestions", { search });
+
+    if (error) {
+        return new Error("Culd not fetch suggestions");
     }
 
     return data;
@@ -90,12 +134,8 @@ export async function deleteCabin(id) {
 // }
 
 export async function createEditCabin(newCabin, id) {
-    
-
-    
     const newFacilities = [...newCabin.facilities];
     const images = newCabin.images;
-
 
     // const imgPromises = images.map(img=> supabase.storage.from('cabin-images').upload(setImageName(img.name),img.file) )
 
@@ -151,7 +191,7 @@ export async function createEditCabin(newCabin, id) {
 
     ////////////////////////// 2. Upload images ///////////////////
 
-    if(id){
+    if (id) {
         await supabase.from("images").delete().eq("cabin_id", id);
     }
 
@@ -195,13 +235,14 @@ export async function createEditCabin(newCabin, id) {
     return data;
 }
 
-export async function getCabin(id) {
+export async function getCabin(id, options) {
     const { data: cabin, error } = await supabase
         .from("cabins")
         .select(
-            "*,profile(*), reviews(*,profile(display_name,avatar)),cabins_facilities(facilities(*)),images(*)"
+            "*,profile(*), reviews(*,profile(display_name,avatar)),cabins_facilities(facilities(*)),images(*),cabin_bookings:bookings!left(*)"
         )
         .eq("id", id)
+        // .in('cabin_bookings.guestId', ["b4270ca1-7bef-4301-b9a9-e75b574e02c6"])
         .single();
 
     if (error) {

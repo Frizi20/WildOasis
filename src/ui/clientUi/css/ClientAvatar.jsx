@@ -15,7 +15,7 @@ const Avatar = styled.img`
 export default function ClientAvatar() {
     const { isLoading, user } = useUser();
 
-    if (isLoading) return <Spinner />;
+    if (isLoading) return <div></div>
 
     const avatar = user?.user_metadata?.avatar || "/default-user.jpg";
 

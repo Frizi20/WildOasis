@@ -25,14 +25,16 @@ const Guest = styled.div`
 `;
 
 export default function TodayItem({ activity }) {
-    const { id, status, guests, numNights } = activity;
+    const { id, status, profile, numNights } = activity;
+
+    console.log(activity);
     return (
         <StyledTodayItem>
             {status === "unconfirmed" && <Tag type="green">Arriving</Tag>}
             {status === "checked-in" && <Tag type="blue">Departing</Tag>}
 
-            <Flag src={guests.countryFlag} alt={`Flag of ${guests.country}`} />
-            <Guest> {guests.fullName} </Guest>
+            <Flag src={profile.countryFlag} alt={`Flag of ${profile.country}`} />
+            <Guest> {profile.display_name} </Guest>
 
             <div> {numNights} </div>
 

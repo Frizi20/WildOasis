@@ -19,6 +19,8 @@ const FullPage = styled.div`
 
 export default function ProtectedRoute({ children }) {
     const navigate = useNavigate();
+
+    console.log('intra');
  
     // 1. Load authenticatedu user
     const { isLoading, isAuthenticated } = useUser();

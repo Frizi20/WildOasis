@@ -9,6 +9,7 @@ import useQueryParams from "../../hooks/useQueryParams";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { formatCurrency } from "../../utils/helpers";
 
 const StyledMakeReservationMobile = styled.div`
     width: 100%;
@@ -66,6 +67,8 @@ export default function MakeReservationMobile({
 
     const [nrGuests, setNrGuests] = useState();
 
+    const { regularPrice } = accommodation;
+
     function handleGuestsChange(guests) {
         setNrGuests(guests);
     }
@@ -96,9 +99,6 @@ export default function MakeReservationMobile({
                     onChange={handleGuestsChange}
                 >
                     <BookingDetails>
-                        <div className="price">
-                            <b>$200</b> night
-                        </div>
                         <Row>
                             <Modal.Open opens={"interval"}>
                                 <div className="interval">
@@ -114,6 +114,9 @@ export default function MakeReservationMobile({
                                 </div>
                             </Modal.Open>
                         </Row>
+                        <div className="price">
+                            <b> {formatCurrency(regularPrice)} </b> night
+                        </div>
                     </BookingDetails>
 
                     <Modal.Window name="interval" closeOutisde={false}>

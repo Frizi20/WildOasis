@@ -8,7 +8,7 @@ const StyledMobileHeader = styled.div`
     height: 85px;
     bottom: 0;
     left: 0;
-    z-index: 3000;
+    z-index: 199;
     position: fixed;
     background-color: #fff;
     display: flex;

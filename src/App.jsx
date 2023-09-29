@@ -27,6 +27,10 @@ import "dayjs/locale/ro";
 
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { FavoritesProvider } from "./context/FavoritesContext";
+import ScrollToTop from "./utils/scrollToTop";
+import ClientAccount from "./pages/clientPages/ClientAccount";
+import Inbox from "./pages/clientPages/Inbox";
+import Favorites from "./pages/clientPages/Favorites";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -41,13 +45,14 @@ export default function App() {
         <DarkModeProvider>
             <FavoritesProvider>
                 <QueryClientProvider client={queryClient}>
-                    {/* <ReactQueryDevtools initialIsOpen={true}  /> */}
+                    <ReactQueryDevtools initialIsOpen={true} />
                     <GlobalStyles />
                     <LocalizationProvider
                         dateAdapter={AdapterDayjs}
                         adapterLocale="ro"
                     >
                         <BrowserRouter>
+                            <ScrollToTop />
                             <Routes>
                                 <Route
                                     element={
@@ -102,6 +107,12 @@ export default function App() {
                                 >
                                     <Route
                                         index
+                                        element={
+                                            <Navigate replace to={"/client"} />
+                                        }
+                                    />
+
+                                    <Route
                                         path="/client"
                                         element={<Client />}
                                     />
@@ -115,6 +126,18 @@ export default function App() {
                                     <Route
                                         path="/client/book/:id"
                                         element={<Book />}
+                                    />
+                                    <Route
+                                        path="/client/account"
+                                        element={<ClientAccount />}
+                                    />
+                                    <Route
+                                        path="/client/inbox"
+                                        element={<Inbox />}
+                                    />
+                                    <Route
+                                        path="/client/favorites"
+                                        element={<Favorites />}
                                     />
                                 </Route>
 

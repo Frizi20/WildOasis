@@ -1,10 +1,14 @@
-import { styled } from "styled-components";
+import { css, styled } from "styled-components";
 import Search from "./Search";
 import Logo from "../Logo";
 
 import { HiOutlineMenu } from "react-icons/hi";
 import { useUser } from "../../features/authentication/useUser";
 import ClientAvatar from "./css/ClientAvatar";
+import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
+import Modal from "../Modal";
+import FiltersModal from "../../features/client/FiltersModal";
+import useFilterQuery from "../../hooks/useFilterQuery";
 
 const StyledHeader = styled.header`
     display: flex;
@@ -16,31 +20,65 @@ const StyledHeader = styled.header`
     margin-bottom: 10px;
 `;
 
-const AvatarContainer = styled.div`
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 9px;
-    padding: 4px 12px;
-    border: 1px solid #7e7e7e;
-    border-radius: 50px;
-    user-select: none;
-
-    & svg {
-        width: 20px;
-        height: 20px;
-    }
-`;
-
 const LogoContainer = styled.div`
     cursor: pointer;
 `;
 
-export default function Header({ isMobile }) {
-    const { isLoading, user } = useUser();
+const StyledSearch = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 10px;
 
-    if (isLoading) return null;
+    ${(props) =>
+        props.$isMobile &&
+        css`
+            width: 100%;
+        `}
+`;
+
+const FilterButton = styled.div`
+    border-radius: 50%;
+    /* flex: 1; */
+    border: 1px solid gainsboro;
+    height: 38px;
+    width: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    cursor: pointer;
+    position: relative;
+
+    & svg {
+        height: 100px;
+        width: 100px;
+        /* flex: 0 0 20px; */
+        /* color: red; */
+        color: #757575;
+    }
+
+    & span {
+        position: absolute;
+        top: -10px;
+        right: -4px;
+        background-color: #fff;
+        padding: 3px;
+        border: 1px solid gainsboro;
+        background-color: #424242;
+        color: #fff;
+        border-radius: 50%;
+        aspect-ratio: 1/1;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+    }
+`;
+
+export default function Header({ isMobile }) {
+    const nrFilters = useFilterQuery(true, 800, "range", "guests", "property");
 
     return (
         <StyledHeader>
@@ -49,14 +87,24 @@ export default function Header({ isMobile }) {
                     <Logo height={60} noTitle={true} />
                 </LogoContainer>
             )}
-            <Search isMobile={isMobile} />
-            {!isMobile && (
-                <AvatarContainer>
-                    <HiOutlineMenu />
-                    {/* <Avatar src="/de fault-user.jpg" /> */}
-                    <ClientAvatar />
-                </AvatarContainer>
-            )}
+            <StyledSearch $isMobile={isMobile}>
+                <Search isMobile={isMobile} />
+                {isMobile && (
+                    <Modal>
+                        <Modal.Open opens="filters">
+                            <FilterButton>
+                                <HiOutlineAdjustmentsHorizontal />
+                                {nrFilters > 0 && <span>3</span>}
+                            </FilterButton>
+                        </Modal.Open>
+                        <Modal.Window name="filters">
+                            <FiltersModal />
+                        </Modal.Window>
+                    </Modal>
+                )}
+            </StyledSearch>
+
+            {!isMobile && <ClientAvatar />}
         </StyledHeader>
     );
 }

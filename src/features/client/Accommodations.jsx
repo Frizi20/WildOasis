@@ -7,6 +7,9 @@ import { useEffect } from "react";
 import MobileHeader from "../../ui/clientUi/MobileHeader";
 import MobileNavList from "./MobileNavList";
 import { useMediaQuery } from "react-responsive";
+import Header from "../../ui/clientUi/Header";
+import ClientNav from "../../ui/clientUi/ClientNav";
+import ClientHeader from "./ClientHeader";
 
 const StyledAccomodationsContainer = styled.div`
     /* flex: 0 0 200px; */
@@ -68,15 +71,24 @@ export default function Accommodations() {
 
     return (
         <>
+            {/* <ClientHeader /> */}
             <StyledAccomodationsContainer>
-                {cabins.map((accomodation, index) => {
-                    return (
-                        <AccommoidationItem
-                            key={index}
-                            accommodation={accomodation}
-                        />
-                    );
-                })}
+                {cabins.length > 0 ? (
+                    cabins.map((accomodation, index) => {
+                        return (
+                            <AccommoidationItem
+                                key={index}
+                                accommodation={accomodation}
+                            />
+                        );
+                    })
+                ) : (
+                    <p style={{ position: "absolute" }}>
+                        {" "}
+                        No accommodations found, try changing the filter{" "}
+                    </p>
+                )}
+
                 {isMobile && (
                     <MobileHeader>
                         <MobileNavList />

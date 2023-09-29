@@ -20,6 +20,9 @@ export default function DashboardLayout() {
     const { confirmedStays, isLoading: isLoading2, numDays } = useRecentStays();
     const { cabins, isLoading: isLoading3 } = useCabins();
 
+    // console.log(bookings);   
+    // return null
+
     if (isLoading || isLoading2 || isLoading3) return <Spinner />;
 
     return (
@@ -30,7 +33,6 @@ export default function DashboardLayout() {
                 numDays={numDays}
                 cabinCount={cabins.length}
             />
-            {/* <div>Statistics</div> */}
             <TodayActivity />
             <DurationChart confirmedStays={confirmedStays} />
             <SalesChart bookings={bookings} numDays={numDays} />

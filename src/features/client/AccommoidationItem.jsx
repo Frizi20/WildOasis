@@ -46,9 +46,9 @@ export default function AccommoidationItem({ accommodation }) {
     const showSliderGalery = useMediaQuery({ query: "(max-width: 1090px)" });
 
     const [isHovered, setIsHovered] = useState(false);
-    const { regularPrice, reviews, id, images, location,title, description } = accommodation;
+    const { regularPrice, reviews, id, images, location, title } =
+        accommodation;
 
-    console.log(accommodation);
     const { toggleItem, favoriteItems } = useFavorites();
 
     const isFavorite = favoriteItems.includes(id);
@@ -69,6 +69,7 @@ export default function AccommoidationItem({ accommodation }) {
 
     return (
         <StyledAccommoidationItem
+            draggable="false"
             onMouseEnter={() => {
                 setIsHovered(true);
             }}
@@ -77,7 +78,7 @@ export default function AccommoidationItem({ accommodation }) {
             }}
             $isFavorite={isFavorite}
             className={styles.acc}
-            to={`booking/${accommodation.id}/${queryString}`}
+            to={`/client/booking/${accommodation.id}/${queryString}`}
         >
             <div className="img-container">
                 <div

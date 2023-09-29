@@ -125,7 +125,12 @@ export default createGlobalStyle`
 
   /* Creating animations for dark mode */
   transition: background-color 0.3s, border 0.3s;
+
+  -webkit-tap-highlight-color: transparent;
+
 }
+
+
 
 html {
   font-size: 60.5%;
@@ -139,6 +144,25 @@ body {
   min-height: 100vh;
   line-height: 1.5;
   font-size: 1.6rem;
+
+
+  ::-webkit-scrollbar {
+        width: 5px; /* width of the entire scrollbar */
+        padding: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #efefef; /* color of the tracking area */
+        margin-top:20px;
+
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #5e5e5e; /* color of the scroll thumb */
+        border-radius: 20px; /* roundness of the scroll thumb */
+        /* border: 3px solid orange; creates padding around scroll thumb */
+        margin-top: 20px !important;
+    }
 }
 
 input,

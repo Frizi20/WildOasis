@@ -23,8 +23,11 @@ function UpdateUserDataForm() {
     const [fullName, setFullName] = useState(currentFullName);
     const [avatar, setAvatar] = useState(null);
 
+    console.log(fullName);
+
     function handleSubmit(e) {
         e.preventDefault();
+
         if (!fullName) return;
 
         updateUser(
@@ -61,12 +64,16 @@ function UpdateUserDataForm() {
                 />
             </FormRow>
             <FormRow label="Avatar image">
-                <FileInput
-                    disabled={isUpdating}
-                    id="avatar"
-                    accept="image/*"
-                    onChange={(e) => setAvatar(e.target.files[0])}
-                />
+                <FileInput>
+                    <input
+                        disabled={isUpdating}
+                        id="avatar"
+                        type="file"
+                        name=""
+                        accept="image/*"
+                        onChange={(e) => setAvatar(e.target.files[0])}
+                    />
+                </FileInput>
             </FormRow>
             <FormRow>
                 <Button

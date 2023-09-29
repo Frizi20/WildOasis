@@ -22,6 +22,7 @@ import Button from "../../ui/Button";
 import Modal from "../../ui/Modal";
 import MobileHeader from "../../ui/clientUi/MobileHeader";
 import MakeReservationMobile from "./MakeReservationMobile";
+import { useUser } from "../authentication/useUser";
 
 const PageWrapper = styled.div`
     width: 1100px;
@@ -56,6 +57,18 @@ const GeneralDetails = styled.div`
                 fill: #ff5d5d;
             }
         `}
+
+    @media screen and (max-width: 750px) {
+        & .back-btn {
+            position: absolute;
+            left: -20px;
+            top: 2px;
+        }
+
+        & .title {
+            padding: 5px 0 1px 15px;
+        }
+    }
 `;
 
 const DetailsWrapper = styled.div`
@@ -85,10 +98,13 @@ const Details = styled.div`
     & .rooms {
         display: flex;
         align-items: center;
-        gap: 10px;
         flex-wrap: wrap;
         /* gap: 20px; */
         /* padding: 10px 0; */
+    }
+
+    & .rooms span:not(:first-child) {
+        padding: 0 10px;
     }
 
     & .hoast-name-rooms {
@@ -195,6 +211,18 @@ const StyledButton = styled.div`
     text-align: center;
 `;
 
+function userReviewedOrVisted(guestId, bookings, reviews) {
+    const userReviewed = reviews.find((review) => {
+        return !!(review.userId === guestId);
+    });
+
+    if (userReviewed) return;
+
+    return bookings.find((booking) => booking.guestId == guestId)
+        ? true
+        : false;
+}
+
 export default function AccommodationDetails() {
     const showSliderGalery = useMediaQuery({ query: "(max-width: 1090px)" });
     const isMobile = useMediaQuery({ query: "(max-width: 862px)" });
@@ -204,13 +232,25 @@ export default function AccommodationDetails() {
     const { isLoading, data: accommodation } = useCabin();
     const { favoriteItems, toggleItem } = useFavorites();
     const { isLoadingSettings, settings } = useSettings();
-
-    // const { user } = useUser();
+    const { user } = useUser();
 
     if (isLoading || isLoadingSettings) return <Spinner />;
 
-    const { description, reviews, title, location, cabins_facilities, images } =
-        accommodation;
+    const {
+        description,
+        reviews,
+        title,
+        location,
+        cabins_facilities,
+        images,
+        cabin_bookings,
+    } = accommodation;
+
+    const canAddReview = userReviewedOrVisted(
+        user?.id,
+        cabin_bookings,
+        reviews
+    );
 
     const display_name = accommodation?.profile?.display_name;
     const avatar = accommodation?.profile?.avatar || "/default-user.jpg";
@@ -255,11 +295,12 @@ export default function AccommodationDetails() {
                         </div>
                         <div className="btns">
                             <StyledBtn
+                                $isMobile={isMobile}
                                 onClick={() => {
                                     toggleItem(accommodation.id);
                                 }}
                             >
-                                <HiHeart /> Save
+                                <HiHeart /> <span>Save</span>
                             </StyledBtn>
                         </div>
                     </div>
@@ -282,9 +323,12 @@ export default function AccommodationDetails() {
                                 <h2>Hoasted by {display_name}</h2>
 
                                 <div className="rooms">
-                                    <span>2 bedrooms</span>
-                                    <span>1 bathrooms</span>
-                                    <span>5 beds </span>
+                                    <span>2 bedrooms &bull;</span>
+
+                                    <span>1 bathrooms &bull;</span>
+
+                                    <span>5 beds &bull; </span>
+
                                     <span>1 kitchen </span>
                                 </div>
                             </div>
@@ -348,9 +392,11 @@ export default function AccommodationDetails() {
                 <Modal>
                     <Modal.Open opens="add-review">
                         <StyledButton>
-                            <Button size="large" $color="#3d3d3d">
-                                Add review
-                            </Button>
+                            {canAddReview && (
+                                <Button size="large" $color="#3d3d3d">
+                                    Add review
+                                </Button>
+                            )}
                         </StyledButton>
                     </Modal.Open>
                     <Modal.Window name="add-review">

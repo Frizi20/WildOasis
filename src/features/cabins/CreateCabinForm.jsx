@@ -10,7 +10,13 @@ import FileInput from "../../ui/FileInput";
 import Textarea from "../../ui/Textarea";
 import FormRow from "../../ui/FormRow";
 import { useUser } from "../authentication/useUser";
-import { Checkbox, FormControlLabel, FormGroup } from "@mui/material";
+import {
+    Checkbox,
+    FormControlLabel,
+    FormGroup,
+    MenuItem,
+    Select,
+} from "@mui/material";
 import { styled } from "styled-components";
 import useFacilities from "./useFacilities";
 import { useState } from "react";
@@ -79,7 +85,14 @@ const RemoveImg = styled.div`
 const FacilityItem = styled.p`
     font-size: 1.3rem;
     color: #666;
-`
+`;
+
+const StyledSelect = styled.select`
+    padding: 5px 10px;
+    background-color: #fff;
+    border: 1px solid gainsboro;
+    border-radius: 5px;
+`;
 
 function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
     const [previewFiles, setPreviewFiles] = useState(() => {
@@ -201,6 +214,35 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
                 />
             </FormRow>
 
+            <FormRow label={"Property type"} error={errors?.property?.message}>
+                <StyledSelect
+                    id="property"
+                    {...register("property", {
+                        required: "This field is required",
+                    })}
+                >
+                    <option value="house">house</option>
+                    <option value="apartament">apartament</option>
+                    <option value="hotel">hotel</option>
+                </StyledSelect>
+
+                {/* <Label htmlFor="maxCapacity">Maximum capacity</Label> */}
+
+                {/* <select name="" id="">
+                    <option value="">home</option>
+                    <option value="">apartament</option>
+                    <option value="">hotel</option>
+                </select> */}
+
+                {/* <Input
+                    disabled={isWorking}
+                    type="text"
+                    id="maxCapacity"
+                    {...register("property", {
+                        required: "This field is required",
+                    })}
+                /> */}
+            </FormRow>
             <FormRow
                 label={"Maximum capacity"}
                 error={errors?.maxCapacity?.message}
@@ -256,7 +298,11 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
                                         )}
                                     />
                                 }
-                                label={<FacilityItem>{facility.label}</FacilityItem>}
+                                label={
+                                    <FacilityItem>
+                                        {facility.label}
+                                    </FacilityItem>
+                                }
                                 value={facility.id}
                                 name={`facilities`}
                                 {...register("facilities", {

@@ -31,6 +31,8 @@ function CheckinBooking() {
     const { settings, isLoading: isLoadingSettings } = useSettings();
     const moveBack = useMoveBack();
 
+    
+
     const { booking, isLoading } = useBooking();
     const { checkIn, isCheckingIn } = useCheckin();
 
@@ -42,7 +44,7 @@ function CheckinBooking() {
 
     const {
         id: bookingId,
-        guests,
+        profile,
         totalPrice,
         numGuests,
         hasBreakfast,
@@ -103,7 +105,7 @@ function CheckinBooking() {
                         setConfirmPaid(e.target.checked);
                     }}
                 >
-                    I confirm that {guests.fullName} has paid the full amount of{" "}
+                    I confirm that {profile.fullName} has paid the full amount of{" "}
                     {!addBreakfast
                         ? formatCurrency(totalPrice)
                         : `${formatCurrency(

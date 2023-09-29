@@ -7,6 +7,10 @@ import { NavLink } from "react-router-dom";
 import ItemsCarusel from "../ItemsCarusel";
 import { HiHome } from "react-icons/hi2";
 import { useFavorites } from "../../context/FavoritesContext";
+import Modal from "../Modal";
+import FavoritesModal from "../../features/client/FavoritesModal";
+import FiltersModal from "../../features/client/FiltersModal";
+import useFilterQuery from "../../hooks/useFilterQuery";
 
 const StyledNavLink = styled(NavLink)`
     display: flex;
@@ -97,11 +101,34 @@ export const StyledBtn = styled.div`
     }
 
     ${(props) =>
-        props.$isFavorite &&
+        props.$isMobile &&
         css`
-            fill: #ff5d5d;
-            background-color: red;
+            height: 25px;
+            width: 25px;
+            border-radius: 50%;
+            padding: 5px;
+
+            & svg {
+                height: 100%;
+                width: 100%;
+            }
+
+            & span {
+                display: none;
+            }
         `}
+
+      ${(props) =>
+          props.$isFavorite &&
+          css`
+              fill: #ff5d5d;
+              background-color: red;
+          `}
+
+
+    @media screen and (max-width: 525px){
+        background-colorred
+    }
 `;
 
 const Favorites = styled(StyledBtn)`
@@ -120,7 +147,7 @@ const Favorites = styled(StyledBtn)`
         background-color: #ff5d5d;
         border-radius: 50%;
         aspect-ratio: 1/1;
-        height: 23px;
+        height: 20px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -139,9 +166,35 @@ const Nav = styled.nav`
     gap: 20px;
 `;
 
+const Filters = styled(StyledBtn)`
+    position: relative;
+
+    & svg {
+        color: #ff5d5d;
+    }
+
+    & span {
+        position: absolute;
+        top: -12px;
+        right: -5px;
+        padding: 5px;
+        background-color: #fff;
+        background-color: #1e1e1e;
+        border-radius: 50%;
+        aspect-ratio: 1/1;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 1.2rem;
+    }
+`;
+
 export default function ClientNav() {
     const { favoriteItems } = useFavorites();
     const favoriteItemsCount = favoriteItems.length;
+    const nrFilters = useFilterQuery(true, 800, "range", "guests", "property");
 
     return (
         <Nav>
@@ -185,17 +238,32 @@ export default function ClientNav() {
             </ItemsCarusel>
 
             <FilterContainer>
-                <Favorites>
-                    <HiHeart />
-                    <div>Favorites</div>
-                    {favoriteItems.length > 0 && (
-                        <span>{favoriteItemsCount}</span>
-                    )}
-                </Favorites>
-                <StyledBtn>
-                    <HiAdjustmentsHorizontal />
-                    <span>Filters</span>
-                </StyledBtn>
+                <Modal>
+                    <Modal.Open opens="favorites">
+                        <Favorites>
+                            <HiHeart />
+                            <div>Favorites</div>
+                            {favoriteItems.length > 0 && (
+                                <span>{favoriteItemsCount}</span>
+                            )}
+                        </Favorites>
+                    </Modal.Open>
+                    <Modal.Open opens="filters">
+                        <Filters>
+                            <HiAdjustmentsHorizontal />
+                            <div>Filters</div>
+                            {nrFilters > 0 && <span> {nrFilters} </span>}
+                        </Filters>
+                    </Modal.Open>
+
+                    <Modal.Window name="favorites">
+                        <FavoritesModal />
+                    </Modal.Window>
+
+                    <Modal.Window name="filters">
+                        <FiltersModal />
+                    </Modal.Window>
+                </Modal>
             </FilterContainer>
         </Nav>
     );

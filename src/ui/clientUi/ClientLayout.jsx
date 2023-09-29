@@ -20,7 +20,7 @@ const StyledClientLayout = styled.div`
     }
 
     @media screen and (max-width: 750px) {
-        padding: 0 35px;
+        padding: 0 15px;
     }
 `;
 
@@ -29,15 +29,15 @@ const PageContainer = styled.div`
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    gap: 20px;
     max-width: 1400px;
     width: 100%;
+    position: relative;
 `;
 
 const FixedHeader = styled.div`
     /* position: sticky; */
     /* top: 0; */
-    z-index: 1000;
+    z-index: 200;
 `;
 
 const Container = styled.div``;

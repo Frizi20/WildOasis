@@ -115,7 +115,7 @@ function BookingDataBox({ booking }) {
     hasBreakfast,
     observations,
     isPaid,
-    guests: { fullName: guestName, email, country, countryFlag, nationalID },
+    profile: { display_name: guestName, email, country, countryFlag, nationalID },
     cabins: { name: cabinName },
   } = booking;
 

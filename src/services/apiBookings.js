@@ -5,7 +5,7 @@ import supabase from "./supabase";
 export async function getBookings({ filter, sortBy, page }) {
     let query = supabase
         .from("bookings")
-        .select("*, cabins(name), guests(fullName,email)", { count: "exact" });
+        .select("*, cabins(name), profile(*)", { count: "exact" });
     // .eq("status", "unconfirmed");
     // .lte("totalPrice", 10000)
     // .order("id", { ascending: false });
@@ -42,7 +42,7 @@ export async function getBookings({ filter, sortBy, page }) {
 export async function getBooking(id) {
     const { data, error } = await supabase
         .from("bookings")
-        .select("*, cabins(*), guests(*)")
+        .select("*, cabins(*), profile(*)")
         .eq("id", id)
         .single();
 
@@ -74,8 +74,7 @@ export async function getBookingsAfterDate(date) {
 export async function getStaysAfterDate(date) {
     const { data, error } = await supabase
         .from("bookings")
-        // .select('*')
-        .select("*, guests(fullName)")
+        .select("*, profile(*)")
         .gte("startDate", date)
         .lte("startDate", getToday());
 
@@ -91,7 +90,7 @@ export async function getStaysAfterDate(date) {
 export async function getStaysTodayActivity() {
     const { data, error } = await supabase
         .from("bookings")
-        .select("*, guests(fullName, nationality, countryFlag)")
+        .select("*, profile(*)")
         .or(
             `and(status.eq.unconfirmed,startDate.eq.${getToday()}),and(status.eq.checked-in,endDate.eq.${getToday()})`
         )
@@ -101,6 +100,8 @@ export async function getStaysTodayActivity() {
     // (stay.status === 'unconfirmed' && isToday(new Date(stay.startDate))) ||
     // (stay.status === 'checked-in' && isToday(new Date(stay.endDate)))
 
+    // console.log({data});
+
     if (error) {
         console.error(error);
         throw new Error("Bookings could not get loaded");
@@ -109,8 +110,6 @@ export async function getStaysTodayActivity() {
 }
 
 export async function updateBooking(id, obj) {
-    
-
     const { data, error } = await supabase
         .from("bookings")
         .update(obj)
@@ -136,5 +135,16 @@ export async function deleteBooking(id) {
         console.error(error);
         throw new Error("Booking could not be deleted");
     }
+    return data;
+}
+
+export async function createBooking(bookingData) {
+    const { error, data } = await supabase
+        .from("bookings")
+        .insert(bookingData)
+        .select()
+        .single();
+    if (error) throw new Error(error);
+
     return data;
 }

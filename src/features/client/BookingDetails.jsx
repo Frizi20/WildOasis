@@ -1,5 +1,4 @@
 import { css, styled } from "styled-components";
-import BasicRow from "../../ui/Row";
 import CreditCardForm from "./CreditCardForm";
 import useQueryParams from "../../hooks/useQueryParams";
 import Button from "../../ui/Button";
@@ -17,22 +16,10 @@ import { useEffect, useState } from "react";
 import GuestsForm from "./Counters";
 import Counters from "./Counters";
 
-// Your trip
-//Date interval
-//People
-
-//Card details
-
-//Message the hoast
-
-//Modal
-// CabinImage | title, rating
-
-//Price details
-//123 x 5
-//another fee
-
-//Total
+import { useUser } from "../authentication/useUser";
+import useCreateBooking from "../bookings/useCreateBooking";
+import PageRow from "../../ui/clientUi/PageRow";
+import Row from "../../ui/clientUi/Row";
 
 const Container = styled.div`
     display: flex;
@@ -123,91 +110,20 @@ const OverviewModal = styled.div`
         font-weight: 500;
     }
 `;
-// const Overview = styled.div``;
 
-const PageRow = styled.div`
-    /* border-bottom: 1px solid gainsboro; */
-    /* border: 1px solid gainsboro; */
-    margin-bottom: 30px;
-    padding: 10px 0;
-    background-color: #fff;
-
-    & .label {
-        font-size: 1.7rem;
-        font-weight: 500;
-    }
-
-    & .value {
-        margin-top: 5px;
-    }
-
-    & .edit {
-        cursor: pointer;
-        font-size: 1.5rem;
-        font-weight: 600;
-        border-bottom: 1px solid #444;
-    }
-`;
-
-const Heading = styled.h2`
+export const Heading = styled.h2`
     font-size: 2.5rem;
     font-weight: 500;
     padding: 20px 0;
 `;
-const Row = styled(BasicRow)`
-    /* background-color: red; */
-    padding: 10px 0;
-    font-size: 1.5rem;
-    align-items: baseline;
 
-    ${(props) =>
-        props.margin &&
-        css`
-            margin: ${props.margin};
-        `}
-`;
-
-const guestsState = {
-    maxCapacity: 10,
-    totalGuests: 0,
-    options: [
-        {
-            id: 1,
-            count: 0,
-            label: "Adults",
-            labelSingular: "Adult",
-            details: "Age 13+",
-        },
-        {
-            id: 2,
-            count: 0,
-            label: "Children",
-            labelSingular: "Child",
-            details: "Age 13+",
-        },
-        {
-            id: 3,
-            count: 0,
-            label: "Infants",
-            labelSingular: "Infant",
-            details: "Under 2",
-        },
-        {
-            id: 4,
-            count: 0,
-            labelSingular: "Pet",
-            label: "Pets",
-            details: "",
-        },
-    ],
-};
 
 export default function BookingDetails() {
-    const {
-        startDate: startDateQuery,
-        endDate: endDateQuery,
-        guestsCount,
-    } = useQueryParams("startDate", "endDate", "guestsCount");
+    const { startDate: startDateQuery, endDate: endDateQuery } = useQueryParams(
+        "startDate",
+        "endDate",
+        "guestsCount"
+    );
 
     const [searchParams, setSearchParams] = useSearchParams();
 
@@ -222,9 +138,13 @@ export default function BookingDetails() {
 
     const [nrGuests, setNrGuests] = useState(0);
 
-    const { isLoading, data } = useCabin();
+    const { isLoading, data } = useCabin({ userId: "2" });
     const { isLoading: isLoadingSettings, settings: { serviceFee } = {} } =
         useSettings();
+
+    const { user, isLoading: isLoadingUser } = useUser();
+
+    const { createBooking, isLoading: isCreatingBooking } = useCreateBooking();
 
     useEffect(() => {
         searchParams.set("startDate", dayjs(startDate).format());
@@ -233,9 +153,17 @@ export default function BookingDetails() {
         setSearchParams(searchParams, { replace: true });
     }, [startDate, endDate, searchParams, setSearchParams]);
 
-    if (isLoading || isLoadingSettings) return <Spinner />;
+    if (isLoading || isLoadingSettings || isLoadingUser) return <Spinner />;
 
-    const { images, location, title, profile, regularPrice, reviews } = data;
+    const {
+        images,
+        location,
+        title,
+        profile,
+        regularPrice,
+        reviews,
+        id: cabinId,
+    } = data;
 
     const avgReviews =
         Math.round(
@@ -247,6 +175,28 @@ export default function BookingDetails() {
 
     function handleGuestsChange(nrGuests) {
         setNrGuests(nrGuests);
+    }
+
+    function updateBooking() {
+        createBooking({
+            cabinPrice: serviceFee + regularPrice * nrNights * nrGuests,
+            status: "unconfirmed",
+            numNights: nrNights,
+            numGuests: nrGuests,
+            startDate: dayjs(startDate)
+                .startOf("day")
+                .format("YYYY-MM-DD HH:mm:ss"),
+            endDate: dayjs(endDate)
+                .startOf("day")
+                .format("YYYY-MM-DD HH:mm:ss"),
+            guestId: user?.id,
+            cabinId: cabinId,
+            hasBreakfast: false,
+            isPaid: false,
+            observations: "I have a peanut allergy",
+            extrasPrice: 0,
+            totalPrice: serviceFee + regularPrice * nrNights * nrGuests,
+        });
     }
 
     return (
@@ -285,9 +235,7 @@ export default function BookingDetails() {
                                 onChange={handleGuestsChange}
                             >
                                 <div>
-                                    <div className="label">
-                                        Number of people
-                                    </div>
+                                    <div className="label">Guests</div>
                                     <Counters.Label />
                                 </div>
                                 <Modal.Open
@@ -319,7 +267,9 @@ export default function BookingDetails() {
                         nights you spent or the service fee.
                     </p>
                 </PageRow>
-                <Button size="large">Request to book</Button>
+                <Button size="large" onClick={updateBooking}>
+                    Request to book
+                </Button>
             </DetailsContainer>
 
             <OverviewContainer>
@@ -352,7 +302,7 @@ export default function BookingDetails() {
 
                         <div className="row">
                             <div>
-                                {formatCurrency(regularPrice)} &times;{" "}
+                                {formatCurrency(regularPrice)} &times;
                                 {nrNights} nights &times; {nrGuests} guests
                             </div>
                             <div>
@@ -364,7 +314,6 @@ export default function BookingDetails() {
 
                         <div className="row">
                             <div>
-                                {" "}
                                 <u>Website fee</u>{" "}
                             </div>
                             <div>{formatCurrency(serviceFee)}</div>

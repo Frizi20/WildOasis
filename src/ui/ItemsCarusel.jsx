@@ -20,14 +20,14 @@ const ItemsContainer = styled.div`
 
 const CaruselBtnContainer = styled.div`
     /* background-color: green; */
-    padding: 5px 10px;
+    padding: 5px 0;
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: 7px 0 8px 1px #fff, -7px 0 8px 1px #fff;
     z-index: 2;
     /* width: fit-content; */
-
+    user-select: none;
     /* border-radius: 50%; */
 `;
 
@@ -42,8 +42,6 @@ const BtnContainer = styled.div`
     background-color: #ffffff;
     cursor: pointer;
     border: 1px solid #353535;
-
-   
 `;
 
 const ListUl = styled.ul`
@@ -59,20 +57,39 @@ const ListUl = styled.ul`
 export default function ItemsCarusel({ children }) {
     const listDom = useRef();
     const caruseContainer = useRef();
+    const isClicked = useRef(false);
 
     function move(direction) {
+        if (isClicked.current) return;
+
         const dir = direction === "left" ? 1 : -1;
 
-        const { width } = caruseContainer.current.getBoundingClientRect();
+        const { width: containerWIdth, left } =
+            caruseContainer.current.getBoundingClientRect();
+        const { left: listLeft, width: listWidth } =
+            listDom.current.getBoundingClientRect();
 
-        const style = window.getComputedStyle(listDom.current).transform;
-        const transformX = new WebKitCSSMatrix(style).m41;
+        const listEnding = listWidth + listLeft;
+        const containerEnding = left + containerWIdth;
+        const stopRight =
+            listEnding - containerEnding < -50 && direction != "left";
 
-        listDom.current.style.transform = `translateX( ${
-            transformX + 300 * dir
-        }px)`;
+        if ((left - listLeft <= 40 && direction == "left") || stopRight) {
+            return;
+        } else {
+            const style = window.getComputedStyle(listDom.current).transform;
+            const transformX = new WebKitCSSMatrix(style).m41;
 
-        console.log(width);
+            listDom.current.style.transform = `translateX( ${
+                transformX + 200 * dir
+            }px)`;
+        }
+
+        isClicked.current = true;
+
+        setTimeout(() => {
+            isClicked.current = false;
+        }, 300);
     }
 
     return (

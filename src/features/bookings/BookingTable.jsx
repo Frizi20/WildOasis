@@ -12,13 +12,15 @@ function BookingTable() {
     const bookings = data?.data;
     let count = data?.count;
 
+    console.log(bookings);
+
     if (isLoading) return <Spinner />;
 
     if (!bookings) return <Empty />;
 
     return (
         <Menus>
-            <Table columns="0.6fr 2fr 2.4fr 1.4fr 1fr 3.2rem">
+            <Table columns="2.5fr 2fr 2.4fr 1.4fr 1fr 2.2rem">
                 <Table.Header>
                     <div>Cabin</div>
                     <div>Guest</div>

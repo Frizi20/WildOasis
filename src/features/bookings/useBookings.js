@@ -31,6 +31,7 @@ export default function useBookings() {
             return getBookings({ filter, sortBy, page });
         },
         queryKey: ["bookings", filter, sortBy, page],
+        retry: false,
     });
 
     //PREFETCHING
@@ -45,10 +46,10 @@ export default function useBookings() {
         });
     }
 
-    if(page > 1){
+    if (page > 1) {
         queryClient.prefetchQuery({
             queryFn: () => {
-                return getBookings({ filter, sortBy, page: page - 1});
+                return getBookings({ filter, sortBy, page: page - 1 });
             },
             queryKey: ["bookings", filter, sortBy, page - 1],
         });

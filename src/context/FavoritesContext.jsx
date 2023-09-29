@@ -1,35 +1,31 @@
-import { createContext, useContext, useState } from "react"
+import { createContext, useContext, useState } from "react";
 
+const FavoritesContext = createContext();
 
-const FavoritesContext = createContext()
+function FavoritesProvider({ children }) {
+    const [favoriteItems, setFavoriteItems] = useState([]);
 
- function FavoritesProvider({children}) {
-
-    const [favoriteItems, setFavoriteItems] = useState([])
-
-
-    function toggleItem(id){
-        setFavoriteItems(prevItems=>{
-            if(prevItems.includes(id)){
-                return prevItems.filter(item=> item !==id)
+    function toggleItem(id) {
+        setFavoriteItems((prevItems) => {
+            if (prevItems.includes(id)) {
+                return prevItems.filter((item) => item !== id);
             }
-            
-            return [...prevItems, id]
-        })
+
+            return [...prevItems, id];
+        });
     }
 
     return (
-       <FavoritesContext.Provider value={{ favoriteItems, toggleItem }}>
+        <FavoritesContext.Provider value={{ favoriteItems, toggleItem }}>
             {children}
-       </FavoritesContext.Provider>
-    )
+        </FavoritesContext.Provider>
+    );
 }
 
- function useFavorites(){
+function useFavorites() {
     const context = useContext(FavoritesContext);
-    if(!context) throw new Error('Context used outside provider')
-    return context
+    if (!context) throw new Error("Context used outside provider");
+    return context;
 }
 
-
-export {FavoritesProvider, useFavorites}
+export { FavoritesProvider, useFavorites };

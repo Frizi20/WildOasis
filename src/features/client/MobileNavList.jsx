@@ -57,25 +57,25 @@ const ItemContainer = styled(NavLink)`
 export default function MobileNavList() {
     return (
         <StyledMobileNavList>
-            <ItemContainer to={"/client"}>
+            <ItemContainer end to={"/client"}>
                 <Item>
                     <HiSearch />
                     <div className="description">Explore</div>
                 </Item>
             </ItemContainer>
-            <ItemContainer to={"/account"}>
+            <ItemContainer to={"/client/account"}>
                 <Item>
                     <HiUser />
                     <div className="description">User</div>
                 </Item>
             </ItemContainer>
-            <ItemContainer to={"/inbox"}>
+            <ItemContainer to={"/client/inbox"}>
                 <Item>
                     <HiMiniChatBubbleBottomCenterText />
                     <div className="description">Inbox</div>
                 </Item>
             </ItemContainer>
-            <ItemContainer to={"/favorites"}>
+            <ItemContainer to={"/client/favorites"}>
                 <Item>
                     <HiHeart />
                     <div className="description">Favorites</div>
