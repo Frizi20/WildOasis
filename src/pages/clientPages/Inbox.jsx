@@ -4,9 +4,17 @@ import MobileHeader from "../../ui/clientUi/MobileHeader";
 import MobileNavList from "../../features/client/MobileNavList";
 import PageHeader from "../../features/client/PageHeader";
 import UserAvatar from "../../features/authentication/UserAvatar";
-import { MdHideImage } from "react-icons/md";
+import { MdHideImage, MdOutlineArrowBackIosNew } from "react-icons/md";
 import { PiImage } from "react-icons/pi";
-import { HiOutlinePaperAirplane, HiPaperAirplane } from "react-icons/hi2";
+import {
+    HiArrowLeft,
+    HiOutlinePaperAirplane,
+    HiPaperAirplane,
+} from "react-icons/hi2";
+import { useState } from "react";
+
+import chatData from "../../data/dummy-chat.json";
+import dayjs from "dayjs";
 
 const Wrapper = styled.div`
     height: calc(100vh - 180px);
@@ -16,31 +24,25 @@ const Wrapper = styled.div`
 
 const Container = styled.div`
     display: flex;
-    width: 100%;
     border: 1px solid gainsboro;
     flex: 1;
-
-    /* display: flex; */
-    width: 100%;
-    border: 1px solid gainsboro;
-    /* flex: 1; */
     position: absolute;
     left: 0;
-    width: 100%;
     bottom: 20px;
     top: 170px;
+    width: 100%;
 
     @media screen and (max-width: 590px) {
         top: 140px;
         bottom: 75px;
-
     }
 
     ${(props) =>
         props.$isMobile &&
         css`
             & .inbox {
-                display: none;
+                /* display: none; */
+                width: 100%;
             }
         `}
 `;
@@ -60,6 +62,9 @@ const CheckboxHeader = styled.div`
     /* height: 60px; */
     padding: 20px;
     border-bottom: 1px solid gainsboro;
+    display: flex;
+    align-items: center;
+    gap: 20px;
 
     @media screen and (max-width: 920px) {
         text-align: center;
@@ -137,7 +142,7 @@ const MessageItem = styled.div`
     } */
 `;
 
-const ChatBox = styled.div`
+const StyledChatBox = styled.div`
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -165,7 +170,9 @@ const ChatContainer = styled.div`
 `;
 
 const Chat = styled.div`
-    width: 100%;
+    width: 500px;
+    max-width: 100%;
+    /* width: 100%; */
     max-width: 100%;
     margin: 0 auto;
     display: flex;
@@ -199,11 +206,13 @@ const ChatMessage = styled.div`
         aspect-ratio: 1/1;
         border-radius: 50%;
         position: relative;
+        overflow: hidden;
     }
 
     & .avatar .img {
         width: 100%;
         height: 100%;
+        overflow: hidden;
     }
 
     & .avatar img {
@@ -213,7 +222,7 @@ const ChatMessage = styled.div`
     }
 
     & .options {
-        flex: 0 0 30px;
+        /* flex: 0 0 30px; */
         border: 1px solid gainsboro;
         aspect-ratio: 1/1;
         opacity: 0;
@@ -271,176 +280,77 @@ const Input = styled.input.attrs({ type: "text" })`
     }
 `;
 
+const BackButton = styled.div``;
+
 export default function Inbox() {
     const isMobile = useMediaQuery({ query: "(max-width: 590px)" });
     const isMobile2 = useMediaQuery({ query: "(max-width: 922px)" });
+    const [showInbox, setShowInbox] = useState(null);
+
+    const inbox = chatData.inbox;
+    const currContact = inbox.find((contact) => {
+        return contact.id === showInbox;
+    });
 
     return (
         <Wrapper>
             <PageHeader>Inbox</PageHeader>
 
             <Container $isMobile={isMobile2}>
-                <Messages className="inbox">
-                    <MessagesHeader>Messages</MessagesHeader>
-                    <MessagesContainer>
-                        {Array.from({ length: 12 }, (el, i) => i).map((el) => {
-                            return (
-                                <MessageItem key={el}>
-                                    <div className="avatar-container">
-                                        <div className="avatar">
-                                            <img
-                                                src="/default-user.jpg"
-                                                alt="image"
-                                            />
+                {(!isMobile2 || !showInbox) && (
+                    <Messages className="inbox">
+                        <MessagesHeader>Messages</MessagesHeader>
+                        <MessagesContainer>
+                            {inbox.map((contact) => {
+                                return (
+                                    <MessageItem
+                                        key={contact.id}
+                                        onClick={() => {
+                                            setShowInbox(contact.id);
+                                        }}
+                                    >
+                                        <div className="avatar-container">
+                                            <div className="avatar">
+                                                <img
+                                                    src={
+                                                        contact?.avatar ||
+                                                        "default-user.jpg"
+                                                    }
+                                                    alt="image"
+                                                />
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="message-details">
-                                        <div className="name">
-                                            Matac Cristi{" "}
-                                            <span>&bull; completed </span>
+                                        <div className="message-details">
+                                            <div className="header">
+                                                <div className="name">
+                                                    {contact.name}{" "}
+                                                    <span>
+                                                        &bull; completed{" "}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div className="msg-content">
+                                                {contact?.lastMessage?.text}
+                                            </div>
+                                            <div className="date">
+                                                {dayjs(
+                                                    contact.lastMessage
+                                                        .timestamp
+                                                ).format("DD MMM YYYY")}
+                                            </div>
                                         </div>
-                                        <div className="msg-content">
-                                            Lorem ipsum dolor sit amet,
-                                            consectetur adipisicing elit.
-                                            Facilis ...
-                                        </div>
-                                        <div className="date">09.28.2023</div>
-                                    </div>
-                                </MessageItem>
-                            );
-                        })}
-                    </MessagesContainer>
-                </Messages>
-                <ChatBox>
-                    <CheckboxHeader>Matac Cristi</CheckboxHeader>
-                    <ChatContainer>
-                        <Chat>
-                            <ChatMessage className="left">
-                                <div className="avatar">
-                                    <div className="img">
-                                        <img src="/default-user.jpg" alt="" />
-                                    </div>
-                                </div>
-                                <div className="message">
-                                    Lorem ipsum dolor sit amet consectetur
-                                    adipisicing elit. Atque blanditiis eveniet
-                                    quasi nostrum veniam provident? Sequi
-                                    nostrum iure optio necessitatibus?
-                                </div>
-                                <div className="options">x</div>
-                            </ChatMessage>
-                            <ChatMessage className="right">
-                                <div className="avatar">
-                                    <div className="img">
-                                        <img src="/default-user.jpg" alt="" />
-                                    </div>
-                                </div>
-                                <div className="message">
-                                    Lorem ipsum dolor sit amet consectetur
-                                    adipisicing elit. Atque blanditiis eveniet
-                                    quasi nostrum veniam provident? Sequi
-                                    nostrum iure optio necessitatibus?
-                                </div>
-                                <div className="options">x</div>
-                            </ChatMessage>
-                            <ChatMessage className="left">
-                                <div className="avatar">
-                                    <div className="img">
-                                        <img src="/default-user.jpg" alt="" />
-                                    </div>
-                                </div>
-                                <div className="message">
-                                    Lorem ipsum dolor sit amet consectetur
-                                    adipisicing elit. Atque blanditiis eveniet
-                                    quasi nostrum veniam provident? Sequi
-                                    nostrum iure optio necessitatibus?
-                                </div>
-                                <div className="options">x</div>
-                            </ChatMessage>
-                            <ChatMessage className="right">
-                                <div className="avatar">
-                                    <div className="img">
-                                        <img src="/default-user.jpg" alt="" />
-                                    </div>
-                                </div>
-                                <div className="message">
-                                    Lorem ipsum dolor sit amet consectetur
-                                    adipisicing elit. Atque blanditiis eveniet
-                                    quasi nostrum veniam provident? Sequi
-                                    nostrum iure optio necessitatibus?
-                                </div>
-                                <div className="options">x</div>
-                            </ChatMessage>
-                            <ChatMessage className="right">
-                                <div className="avatar">
-                                    <div className="img">
-                                        <img src="/default-user.jpg" alt="" />
-                                    </div>
-                                </div>
-                                <div className="message">
-                                    Lorem ipsum dolor sit amet consectetur
-                                    adipisicing elit. Atque blanditiis eveniet
-                                    quasi nostrum veniam provident? Sequi
-                                    nostrum iure optio necessitatibus?
-                                </div>
-                                <div className="options">x</div>
-                            </ChatMessage>
-                            <ChatMessage className="right">
-                                <div className="avatar">
-                                    <div className="img">
-                                        <img src="/default-user.jpg" alt="" />
-                                    </div>
-                                </div>
-                                <div className="message">
-                                    Lorem ipsum dolor sit amet consectetur
-                                    adipisicing elit. Atque blanditiis eveniet
-                                    quasi nostrum veniam provident? Sequi
-                                    nostrum iure optio necessitatibus?
-                                </div>
-                                <div className="options">x</div>
-                            </ChatMessage>
-                            <ChatMessage className="right">
-                                <div className="avatar">
-                                    <div className="img">
-                                        <img src="/default-user.jpg" alt="" />
-                                    </div>
-                                </div>
-                                <div className="message">
-                                    Lorem ipsum dolor sit amet consectetur
-                                    adipisicing elit. Atque blanditiis eveniet
-                                    quasi nostrum veniam provident? Sequi
-                                    nostrum iure optio necessitatibus?
-                                </div>
-                                <div className="options">x</div>
-                            </ChatMessage>
-                            <ChatMessage className="right">
-                                <div className="avatar">
-                                    <div className="img">
-                                        <img src="/default-user.jpg" alt="" />
-                                    </div>
-                                </div>
-                                <div className="message">
-                                    Lorem ipsum dolor sit amet consectetur
-                                    adipisicing elit. Atque blanditiis eveniet
-                                    quasi nostrum veniam provident? Sequi
-                                    nostrum iure optio necessitatibus?
-                                </div>
-                                <div className="options">x</div>
-                            </ChatMessage>
-                        </Chat>
-                    </ChatContainer>
-                    <ChatInputContainer>
-                        <ChatInput>
-                            <div className="img">
-                                <PiImage />
-                            </div>
-                            <Input />
-                            <SendMessage>
-                                <HiOutlinePaperAirplane />
-                            </SendMessage>
-                        </ChatInput>
-                    </ChatInputContainer>
-                </ChatBox>
+                                    </MessageItem>
+                                );
+                            })}
+                        </MessagesContainer>
+                    </Messages>
+                )}
+                {(!isMobile2 || showInbox) && (
+                    <ChatBox
+                        setShowInbox={setShowInbox}
+                        contact={currContact}
+                    />
+                )}
             </Container>
 
             {isMobile && (
@@ -449,5 +359,63 @@ export default function Inbox() {
                 </MobileHeader>
             )}
         </Wrapper>
+    );
+}
+
+function ChatBox({ setShowInbox, contact }) {
+    console.log(contact);
+    return (
+        <StyledChatBox>
+            <CheckboxHeader>
+                <BackButton
+                    onClick={() => {
+                        setShowInbox(null);
+                    }}
+                >
+                    <MdOutlineArrowBackIosNew />
+                </BackButton>
+                <div className="name">Matac Cristi</div>
+            </CheckboxHeader>
+            <ChatContainer>
+                <Chat>
+                    {contact.messages.map((message) => {
+                        return (
+                            <ChatMessage
+                                className={
+                                    message.sender === "1" ? "right" : "left"
+                                }
+                                key={message.id}
+                            >
+                                <div className="avatar">
+                                    <div className="img">
+                                        <img
+                                            src={
+                                                message.sender !== "1"
+                                                    ? contact.avatar
+                                                    : "/default-user.jpg"
+                                            }
+                                            alt=""
+                                        />
+                                    </div>
+                                </div>
+                                <div className="message">{message.text}</div>
+                                <div className="options">x</div>
+                            </ChatMessage>
+                        );
+                    })}
+                </Chat>
+            </ChatContainer>
+            <ChatInputContainer>
+                <ChatInput>
+                    <div className="img">
+                        <PiImage />
+                    </div>
+                    <Input />
+                    <SendMessage>
+                        <HiOutlinePaperAirplane />
+                    </SendMessage>
+                </ChatInput>
+            </ChatInputContainer>
+        </StyledChatBox>
     );
 }

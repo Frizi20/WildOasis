@@ -1,9 +1,7 @@
 import styled from "styled-components";
 import { Checkbox, FormControlLabel, FormGroup, Slider } from "@mui/material";
 import { useState } from "react";
-import Row from "../../ui/Row";
-import { HiBuildingOffice, HiHome } from "react-icons/hi2";
-import { FaHotel } from "react-icons/fa";
+
 import { BsBuilding, BsBuildings } from "react-icons/bs";
 import { LuHome } from "react-icons/lu";
 import useFacilities from "../cabins/useFacilities";

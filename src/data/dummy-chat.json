@@ -1,0 +1,116 @@
+{
+    "user": {
+        "id": "1",
+        "name": "John Doe",
+        "avatar": "https://example.com/avatar/john-doe.jpg"
+    },
+    "inbox": [
+        {
+            "id": "101",
+            "name": "Alice Smith",
+            "avatar": "https://connectme-html.themeyn.com/images/avatar/2.jpg",
+            "lastMessage": {
+                "text": "Hey, how's it going?",
+                "timestamp": "09.28.2023"
+            },
+            "messages": [
+                {
+                    "id": "1",
+                    "sender": "101",
+                    "text": "PHey, how's it going?",
+                    "timestamp": "2023-09-30T14:30:00Z"
+                },
+                {
+                    "id": "2",
+                    "sender": "1",
+                    "text": "Hi Alice, I'm doing well. How about you?",
+                    "timestamp": "2023-09-30T14:35:00Z"
+                },
+                {
+                    "id": "3",
+                    "sender": "101",
+                    "text": "I'm good, thanks for asking!",
+                    "timestamp": "2023-09-30T14:40:00Z"
+                },
+                {
+                    "id": "4",
+                    "sender": "1",
+                    "text": "What have you been up to lately?",
+                    "timestamp": "2023-09-30T14:45:00Z"
+                },
+                {
+                    "id": "5",
+                    "sender": "101",
+                    "text": "Not much, just working and enjoying the weekend. How about you?",
+                    "timestamp": "2023-09-30T14:50:00Z"
+                },
+                {
+                    "id": "6",
+                    "sender": "1",
+                    "text": "I've been busy with work too, but I'm looking forward to the weekend.",
+                    "timestamp": "2023-09-30T14:55:00Z"
+                },
+                {
+                    "id": "7",
+                    "sender": "101",
+                    "text": "Any fun plans for the weekend?",
+                    "timestamp": "2023-09-30T15:00:00Z"
+                },
+                {
+                    "id": "8",
+                    "sender": "1",
+                    "text": "I'm thinking about going hiking. How about you?",
+                    "timestamp": "2023-09-30T15:05:00Z"
+                },
+                {
+                    "id": "9",
+                    "sender": "101",
+                    "text": "That sounds like a great idea! I might go to the beach.",
+                    "timestamp": "2023-09-30T15:10:00Z"
+                },
+                {
+                    "id": "10",
+                    "sender": "1",
+                    "text": "Awesome! Let's enjoy the weekend then.",
+                    "timestamp": "2023-09-30T15:15:00Z"
+                }
+            ]
+        },
+        {
+            "id": "102",
+            "name": "Bob Johnson",
+            "avatar": "https://connectme-html.themeyn.com/images/avatar/4.jpg",
+            "lastMessage": {
+                "text": "What are you up to today?",
+                "timestamp": "2023-09-25T19:45:00Z"
+            }
+        },
+        {
+            "id": "103",
+            "name": "Eva Wilson",
+            "avatar": "https://connectme-html.themeyn.com/images/avatar/7.jpg",
+            "lastMessage": {
+                "text": "I'll be there in 10 minutes.",
+                "timestamp": "2023-09-20T10:20:00Z"
+            }
+        },
+        {
+            "id": "104",
+            "name": "David Lee",
+            "avatar": "https://connectme-html.themeyn.com/images/avatar/6.jpg",
+            "lastMessage": {
+                "text": "Let's grab lunch at the new place.",
+                "timestamp": "2023-08-23T16:05:00Z"
+            }
+        },
+        {
+            "id": "105",
+            "name": "Sophia Adams",
+            "avatar": "https://connectme-html.themeyn.com/images/avatar/9.jpg",
+            "lastMessage": {
+                "text": "How was your weekend?",
+                "timestamp": "2023-07-15T09:15:00Z"
+            }
+        }
+    ]
+}
