@@ -83,7 +83,69 @@
             "lastMessage": {
                 "text": "What are you up to today?",
                 "timestamp": "2023-09-25T19:45:00Z"
-            }
+            },
+            "messages": [
+                {
+                    "id": "1",
+                    "sender": "102",
+                    "text": "What are you up to today?",
+                    "timestamp": "2023-09-29T19:45:00Z"
+                },
+                {
+                    "id": "2",
+                    "sender": "1",
+                    "text": "Hey Bob, not much. Just catching up on some reading. How about you?",
+                    "timestamp": "2023-09-29T19:50:00Z"
+                },
+                {
+                    "id": "3",
+                    "sender": "102",
+                    "text": "I'm working on a new project. It's been pretty busy lately.",
+                    "timestamp": "2023-09-29T19:55:00Z"
+                },
+                {
+                    "id": "4",
+                    "sender": "1",
+                    "text": "That sounds interesting! What's the project about?",
+                    "timestamp": "2023-09-29T20:00:00Z"
+                },
+                {
+                    "id": "5",
+                    "sender": "102",
+                    "text": "It's a mobile app for tracking fitness and health goals.",
+                    "timestamp": "2023-09-29T20:05:00Z"
+                },
+                {
+                    "id": "6",
+                    "sender": "1",
+                    "text": "Wow, that's cool! Are you looking for beta testers?",
+                    "timestamp": "2023-09-29T20:10:00Z"
+                },
+                {
+                    "id": "7",
+                    "sender": "102",
+                    "text": "Actually, we might need some. I'll let you know!",
+                    "timestamp": "2023-09-29T20:15:00Z"
+                },
+                {
+                    "id": "8",
+                    "sender": "1",
+                    "text": "Great! Count me in if you need testers.",
+                    "timestamp": "2023-09-29T20:20:00Z"
+                },
+                {
+                    "id": "9",
+                    "sender": "102",
+                    "text": "Thanks, John! I appreciate it.",
+                    "timestamp": "2023-09-29T20:25:00Z"
+                },
+                {
+                    "id": "10",
+                    "sender": "1",
+                    "text": "No problem, Bob. Let me know if there's anything else I can help with.",
+                    "timestamp": "2023-09-29T20:30:00Z"
+                }
+            ]
         },
         {
             "id": "103",
@@ -92,7 +154,69 @@
             "lastMessage": {
                 "text": "I'll be there in 10 minutes.",
                 "timestamp": "2023-09-20T10:20:00Z"
-            }
+            },
+            "messages": [
+                {
+                    "id": "1",
+                    "sender": "103",
+                    "text": "I'll be there in 10 minutes.",
+                    "timestamp": "2023-09-29T10:20:00Z"
+                },
+                {
+                    "id": "2",
+                    "sender": "1",
+                    "text": "Sure, take your time!",
+                    "timestamp": "2023-09-29T10:25:00Z"
+                },
+                {
+                    "id": "3",
+                    "sender": "103",
+                    "text": "Thanks, see you soon!",
+                    "timestamp": "2023-09-29T10:30:00Z"
+                },
+                {
+                    "id": "4",
+                    "sender": "1",
+                    "text": "By the way, did you get a chance to review the proposal?",
+                    "timestamp": "2023-09-29T10:35:00Z"
+                },
+                {
+                    "id": "5",
+                    "sender": "103",
+                    "text": "Yes, I did. It looks good overall. I have a few suggestions though.",
+                    "timestamp": "2023-09-29T10:40:00Z"
+                },
+                {
+                    "id": "6",
+                    "sender": "1",
+                    "text": "That's great to hear! What are your suggestions?",
+                    "timestamp": "2023-09-29T10:45:00Z"
+                },
+                {
+                    "id": "7",
+                    "sender": "103",
+                    "text": "I think we should add more details to the budget section...",
+                    "timestamp": "2023-09-29T10:50:00Z"
+                },
+                {
+                    "id": "8",
+                    "sender": "1",
+                    "text": "I see your point. I'll make those updates. Anything else?",
+                    "timestamp": "2023-09-29T10:55:00Z"
+                },
+                {
+                    "id": "9",
+                    "sender": "103",
+                    "text": "Not for now. I'll email you the revised version later today.",
+                    "timestamp": "2023-09-29T11:00:00Z"
+                },
+                {
+                    "id": "10",
+                    "sender": "1",
+                    "text": "Sounds good, Eva. Thanks for your input!",
+                    "timestamp": "2023-09-29T11:05:00Z"
+                }
+            ]
         },
         {
             "id": "104",
@@ -101,7 +225,69 @@
             "lastMessage": {
                 "text": "Let's grab lunch at the new place.",
                 "timestamp": "2023-08-23T16:05:00Z"
-            }
+            },
+            "messages": [
+                {
+                    "id": "1",
+                    "sender": "104",
+                    "text": "Let's meet at the cafe at 3 PM.",
+                    "timestamp": "2023-09-28T16:05:00Z"
+                },
+                {
+                    "id": "2",
+                    "sender": "1",
+                    "text": "Sure, see you there!",
+                    "timestamp": "2023-09-28T16:10:00Z"
+                },
+                {
+                    "id": "3",
+                    "sender": "104",
+                    "text": "I'll grab a table by the window.",
+                    "timestamp": "2023-09-28T16:15:00Z"
+                },
+                {
+                    "id": "4",
+                    "sender": "1",
+                    "text": "Sounds good. I'll be wearing a blue shirt.",
+                    "timestamp": "2023-09-28T16:20:00Z"
+                },
+                {
+                    "id": "5",
+                    "sender": "104",
+                    "text": "Great, see you soon!",
+                    "timestamp": "2023-09-28T16:25:00Z"
+                },
+                {
+                    "id": "6",
+                    "sender": "1",
+                    "text": "Hey David, I just wanted to confirm the meeting time.",
+                    "timestamp": "2023-09-28T12:30:00Z"
+                },
+                {
+                    "id": "7",
+                    "sender": "104",
+                    "text": "Yes, it's at 3 PM at our usual cafe.",
+                    "timestamp": "2023-09-28T12:35:00Z"
+                },
+                {
+                    "id": "8",
+                    "sender": "1",
+                    "text": "Perfect, see you at 3 PM then!",
+                    "timestamp": "2023-09-28T12:40:00Z"
+                },
+                {
+                    "id": "9",
+                    "sender": "104",
+                    "text": "Looking forward to it!",
+                    "timestamp": "2023-09-28T12:45:00Z"
+                },
+                {
+                    "id": "10",
+                    "sender": "1",
+                    "text": "Likewise, David!",
+                    "timestamp": "2023-09-28T12:50:00Z"
+                }
+            ]
         },
         {
             "id": "105",
@@ -110,7 +296,69 @@
             "lastMessage": {
                 "text": "How was your weekend?",
                 "timestamp": "2023-07-15T09:15:00Z"
-            }
+            },
+            "messages": [
+                {
+                    "id": "1",
+                    "sender": "105",
+                    "text": "How was your weekend?",
+                    "timestamp": "2023-09-27T09:15:00Z"
+                },
+                {
+                    "id": "2",
+                    "sender": "1",
+                    "text": "It was great, thanks! I went hiking in the mountains. How about yours?",
+                    "timestamp": "2023-09-27T09:20:00Z"
+                },
+                {
+                    "id": "3",
+                    "sender": "105",
+                    "text": "I had a relaxing weekend at the beach. The weather was perfect!",
+                    "timestamp": "2023-09-27T09:25:00Z"
+                },
+                {
+                    "id": "4",
+                    "sender": "1",
+                    "text": "That sounds amazing! Did you do any water activities?",
+                    "timestamp": "2023-09-27T09:30:00Z"
+                },
+                {
+                    "id": "5",
+                    "sender": "105",
+                    "text": "Yes, I went paddleboarding. It was so much fun!",
+                    "timestamp": "2023-09-27T09:35:00Z"
+                },
+                {
+                    "id": "6",
+                    "sender": "1",
+                    "text": "I've always wanted to try paddleboarding. Maybe we can go together sometime!",
+                    "timestamp": "2023-09-27T09:40:00Z"
+                },
+                {
+                    "id": "7",
+                    "sender": "105",
+                    "text": "That sounds like a plan! Let's do it.",
+                    "timestamp": "2023-09-27T09:45:00Z"
+                },
+                {
+                    "id": "8",
+                    "sender": "1",
+                    "text": "Awesome! I'll look up some good spots for paddleboarding.",
+                    "timestamp": "2023-09-27T09:50:00Z"
+                },
+                {
+                    "id": "9",
+                    "sender": "105",
+                    "text": "Sounds good. Just let me know when you're ready!",
+                    "timestamp": "2023-09-27T09:55:00Z"
+                },
+                {
+                    "id": "10",
+                    "sender": "1",
+                    "text": "Will do, Sophia. Looking forward to it!",
+                    "timestamp": "2023-09-27T10:00:00Z"
+                }
+            ]
         }
     ]
 }

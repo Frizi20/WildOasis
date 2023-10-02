@@ -31,7 +31,26 @@ const PageWrapper = styled.div`
     padding-bottom: 150px;
 `;
 
-const GeneralDetailsContainer = styled.div``;
+const GeneralDetailsContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+
+    .general-details-container {
+        /* background-color: red; */
+        margin-top: 15px;
+        padding-bottom: 15px;
+    }
+
+    @media screen and (max-width: 750px) {
+        flex-direction: column-reverse;
+        border-bottom: 1px solid gainsboro;
+
+        & .container{
+            margin-left: -20px;
+            margin-right: -20px;
+        }
+    }
+`;
 
 const GeneralDetails = styled.div`
     position: relative;
@@ -73,7 +92,7 @@ const GeneralDetails = styled.div`
 
 const DetailsWrapper = styled.div`
     /* height: 1400px; */
-    margin-top: 30px;
+    /* margin-top: 30px; */
     /* border: 1px solid gainsboro; */
     display: flex;
     flex-direction: column;
@@ -91,7 +110,7 @@ const Details = styled.div`
 
     & .overview {
         display: flex;
-        padding: 30px 0 15px 0;
+        padding: 10px 0 15px 0;
         border-bottom: 1px solid gainsboro;
     }
 
@@ -119,7 +138,7 @@ const Details = styled.div`
 
     & .hoast-name-rooms h2 {
         /* background-color: red; */
-        font-size: 2.1rem;
+        font-size: 1.8rem;
         color: var(--color-grey-700);
         /* padding-top: 10px; */
     }
@@ -268,7 +287,10 @@ export default function AccommodationDetails() {
     return (
         <PageWrapper>
             <GeneralDetailsContainer className={styles.acc}>
-                <GeneralDetails $isFavorite={isFavorite}>
+                <GeneralDetails
+                    $isFavorite={isFavorite}
+                    className="general-details-container"
+                >
                     <div className="back-btn">
                         <BackButton />
                     </div>
@@ -300,7 +322,7 @@ export default function AccommodationDetails() {
                                     toggleItem(accommodation.id);
                                 }}
                             >
-                                <HiHeart /> <span>Save</span>
+                                <HiHeart /> <span>Salveaza</span>
                             </StyledBtn>
                         </div>
                     </div>

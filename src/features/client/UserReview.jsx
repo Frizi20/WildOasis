@@ -104,7 +104,7 @@ export default function UserReview({ review }) {
                                 <img
                                     src={avatar || "/default-user.jpg"}
                                     alt=""
-                                />{" "}
+                                />
                             </div>
                         </div>
 

@@ -155,7 +155,7 @@ const NrGuests = styled.div`
 
 const Properties = styled.div`
     display: flex;
-    gap: 15px;
+    gap: 5px;
     padding: 2px;
 
     & .property {
@@ -188,6 +188,7 @@ const Properties = styled.div`
     & .property .name {
         user-select: none;
         pointer-events: none;
+        font-size: 1.2rem;
     }
 `;
 

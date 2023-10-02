@@ -10,6 +10,10 @@ const SliderContainer = styled.div`
     aspect-ratio: 16/9;
     position: relative;
     overflow: hidden;
+
+
+
+
 `;
 
 const ItemsTrack = styled.div`

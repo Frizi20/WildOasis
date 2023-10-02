@@ -20,7 +20,7 @@ const StyledClientLayout = styled.div`
     }
 
     @media screen and (max-width: 750px) {
-        padding: 0 15px;
+        padding: 0 20px;
     }
 `;
 

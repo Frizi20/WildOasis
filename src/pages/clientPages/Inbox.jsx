@@ -92,13 +92,14 @@ const MessagesContainer = styled.div`
     }
 `;
 const MessageItem = styled.div`
-    flex: 0 0 120px;
-    background-color: #f5f5f585;
+    flex: 0 0 50px;
+    /* background-color: #0606ff18; */
     border-radius: 5px;
+    padding-left: 5px;
     cursor: pointer;
     display: flex;
     align-items: center;
-    box-shadow: 0 0 0px 1px #e7e7e799;
+    /* box-shadow: 0 0 0px 1px #e7e7e799; */
 
     & .avatar-container {
         flex: 0 0 60px;
@@ -230,7 +231,14 @@ const ChatMessage = styled.div`
 
     &.right {
         flex-direction: row-reverse;
+        
     }
+    
+    &.right .message{
+        background-color: #3a7fff;
+        color: #fff;
+    }
+
 `;
 
 const ChatInputContainer = styled.div`
@@ -285,19 +293,21 @@ const BackButton = styled.div``;
 export default function Inbox() {
     const isMobile = useMediaQuery({ query: "(max-width: 590px)" });
     const isMobile2 = useMediaQuery({ query: "(max-width: 922px)" });
-    const [showInbox, setShowInbox] = useState(null);
+    const [contactId, setContactId] = useState(()=>{
+        chatData?.inbox?.[0] || null
+    });
 
     const inbox = chatData.inbox;
     const currContact = inbox.find((contact) => {
-        return contact.id === showInbox;
-    });
+        return contact.id === contactId;
+    }) || inbox[0];
 
     return (
         <Wrapper>
             <PageHeader>Inbox</PageHeader>
 
             <Container $isMobile={isMobile2}>
-                {(!isMobile2 || !showInbox) && (
+                {(!isMobile2 || !contactId) && (
                     <Messages className="inbox">
                         <MessagesHeader>Messages</MessagesHeader>
                         <MessagesContainer>
@@ -306,7 +316,7 @@ export default function Inbox() {
                                     <MessageItem
                                         key={contact.id}
                                         onClick={() => {
-                                            setShowInbox(contact.id);
+                                            setContactId(contact.id);
                                         }}
                                     >
                                         <div className="avatar-container">
@@ -324,9 +334,9 @@ export default function Inbox() {
                                             <div className="header">
                                                 <div className="name">
                                                     {contact.name}{" "}
-                                                    <span>
+                                                    {/* <span>
                                                         &bull; completed{" "}
-                                                    </span>
+                                                    </span> */}
                                                 </div>
                                             </div>
                                             <div className="msg-content">
@@ -345,9 +355,9 @@ export default function Inbox() {
                         </MessagesContainer>
                     </Messages>
                 )}
-                {(!isMobile2 || showInbox) && (
+                {(!isMobile2 || contactId) && (
                     <ChatBox
-                        setShowInbox={setShowInbox}
+                        setContactId={setContactId}
                         contact={currContact}
                     />
                 )}
@@ -362,19 +372,19 @@ export default function Inbox() {
     );
 }
 
-function ChatBox({ setShowInbox, contact }) {
+function ChatBox({ setContactId, contact }) {
     console.log(contact);
     return (
         <StyledChatBox>
             <CheckboxHeader>
                 <BackButton
                     onClick={() => {
-                        setShowInbox(null);
+                        setContactId(null);
                     }}
                 >
                     <MdOutlineArrowBackIosNew />
                 </BackButton>
-                <div className="name">Matac Cristi</div>
+                <div className="name">{contact.name}</div>
             </CheckboxHeader>
             <ChatContainer>
                 <Chat>
